@@ -1,0 +1,9 @@
+def check_int():
+    while True:
+        try:
+            num=int(input("Please enter your number: "))
+            print(f"Your number is {num}")
+            #return num
+        except ValueError:
+            print("Please enter an integer")
+check_int()
