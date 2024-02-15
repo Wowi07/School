@@ -1,9 +1,11 @@
 def check_int():
     while True:
         try:
+            error="Please enter an integer that is 13 or more."
             num=int(input("Please enter your number: "))
-            print(f"Your number is {num}")
-            #return num
+            if(num<13):
+                print(error)
+            else:
+                return num
         except ValueError:
-            print("Please enter an integer")
-check_int()
+            print(error)
