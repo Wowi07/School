@@ -1,3 +1,8 @@
+import random
+#random a num
+def radnum():
+  respone=random.randint(1 , 6)
+  return respone
 #return true or false depend on an answer
 def yes_no(question):
     while True:
