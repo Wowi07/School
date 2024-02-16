@@ -1,3 +1,4 @@
+#return true or false depend on an answer
 def yes_no(question):
     while True:
         player=input(question+'  ').lower()
@@ -7,6 +8,19 @@ def yes_no(question):
             return False
         else:
             print('You did not choose a valid response')
+#check does the input is value(int, >13)
+def check_int():
+    while True:
+        try:
+            error="Please enter an integer that is 13 or more."
+            num=int(input("Please enter your number: "))
+            if(num<13):
+                print(error)
+            else:
+                return num
+        except ValueError:
+            print(error)
+
 #main 
 intruc=bool(yes_no("Do you want to read the instruction:"))
 if intruc:
