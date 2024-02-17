@@ -6,7 +6,7 @@ def game_play():
     dbscore=True
   sum=s1+s2
   while True:
-    if(yes_no("Do you want to continue rolling the dice? "):
+    if(yes_no("Do you want to continue rolling the dice? ")):
       sum=sum+randnum()
     else:
       return sum , dbscore
