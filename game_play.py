@@ -12,5 +12,5 @@ def game_play():
       print(f"You rolled {temp}"+"\n"+f"Your total score is now {sum}")
     else:
       return sum , dbscore
-playerscore , db = gameplay()
+playerscore , db = game_play()
 print(playerscore + db)
