@@ -7,7 +7,9 @@ def game_play():
   sum=s1+s2
   while True:
     if(yes_no("Do you want to continue rolling the dice? ")):
-      sum=sum+randnum()
+      temp=randnum()
+      sum=sum+temp
+      print(f"You rolled {temp}"+"\n"+f"Your total score is now {sum}")
     else:
       return sum , dbscore
 playerscore , db = gameplay()
