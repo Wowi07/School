@@ -1,6 +1,6 @@
 import random
 #random a num
-def radnum():
+def randnum():
   respone=random.randint(1 , 6)
   return respone
 #return true or false depend on an answer
