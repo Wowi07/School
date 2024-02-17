@@ -10,3 +10,5 @@ def game_play():
       sum=sum+randnum()
     else:
       return sum , dbscore
+playerscore , db = gameplay()
+print(playerscore + db)
