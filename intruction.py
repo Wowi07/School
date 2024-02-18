@@ -17,4 +17,3 @@ def instruction():
   - If the first roll of your dice is a double, then your score is increased by double the number of points, provided you win. If the computer’s first roll of the dice is a double, then its points are not doubled (this gives the human player a slight advantage).
   
   - The ultimate winner of the game is the first one to get to the specified score goal.''')
-  print("Please enter a target score")
