@@ -44,6 +44,7 @@ def instruction():
     - If the first roll of your dice is a double, then your score is increased by double the number of points, provided you win. If the computer’s first roll of the dice is a double, then its points are not doubled (this gives the human player a slight advantage).
     
     - The ultimate winner of the game is the first one to get to the specified score goal.''')
+# show who is heading
 def update(n1 , n2):
     print("*** Round Update ***:",end=" ")
     if n1>n2:
@@ -53,7 +54,7 @@ def update(n1 , n2):
     else:
         print("You guys are tie")
     print("\n"+"\n")
-
+# gamepay in a single round
 def game_play(target_score):
     input("Press <Enter> to start this round....")
     print("\n"+"\n")
@@ -86,13 +87,14 @@ def game_play(target_score):
         if signal_p==0 and yes_no("Do you want to continue rolling the dice? ") :
             temp=randnum()
             P_score=P_score+temp
+            print("\n"+"\n"+f"You rolled {temp}"+"\n"+f"Your total score is now {P_score}")
             #if cp score higher than target score
             if(P_score>target_score):
-                print(f"You rolled {temp}, your total score is {P_score} which is over {target_score}, so computer win this round...")
+                print(f"Your total score is over {target_score}, so computer win this round...")
                 return "Computer"
-            print("\n"+"\n"+f"You rolled {temp}"+"\n"+f"Your total score is now {P_score}")
             #if player reach target score 
             if(P_score==target_score):
+                print(f"Your total score is now equal {target_score}")
                 return("Player")
             update(P_score,C_score)
             print("\n"+"\n")
@@ -103,21 +105,21 @@ def game_play(target_score):
         #computer will roll til win:))))))))) , he is reager to win
             
         # this if line is marking when cp reach target score - 3 and heading the round, the condition signal_c==0 to make sure that it just work 1 time
-        if(C_score>=(int(target_score) - 3)) and (C_score>P_score) and signal_c==0:
+        if(((((C_score>P_score)) and C_score>=target_score) or (signal_p==1 and (C_score>P_score))) ) and signal_c==0:
             signal_c=1
             print("Computer is passing....")
         if signal_c==0:
             input("Press <Enter>  It's computer turn....")
             temp=randnum()
             C_score=C_score+temp
+            print("\n"+"\n"+f"Computer rolled {temp}"+"\n"+f"Computer's total score is now {C_score}")
             #if player score higher than target score
             if(C_score>target_score):
-                print(f"Computer rolled {temp} and raised a total score to {C_score} which is over {target_score}, so player win this round...")
+                print(f"Computer's total score is over {target_score}, so player win this round...")
                 return "Player"
             #if cp reach target score 
             if(C_score==target_score):
                 return("Computer")
-            print("\n"+"\n"+f"Computer rolled {temp}"+"\n"+f"Computer's total score is now {C_score}")
             update(P_score,C_score)
         if(signal_c>0 and signal_p> 0):
             break 
@@ -133,7 +135,3 @@ instruction()
 target_score = int(check_int())
 result=game_play(target_score)
 print("\n"+"\n"+"\n"+f"The winner is {result}")
-
-
-
-
