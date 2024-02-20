@@ -129,12 +129,11 @@ def game_play():
                 return "Player is the winner"
             # if cp reach target score
             if (C_score == 13):
-                print("Computer total score is now equal 13")
                 return ("Computer is the winner")
             update(P_score, C_score)
         if (signal_c > 0 and signal_p > 0):
             break
-            # This case will return the result of this round if both didnt go over or equal 13
+            # This case will return the result of this round if both didnt go over target score
     if (P_score > C_score):
         return "Player is the winner"
     elif (P_score < C_score):
