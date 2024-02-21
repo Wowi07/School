@@ -102,11 +102,11 @@ def game_play():
             # if cp score higher than target score
             if (P_score > 13):
                 print(f"Your total score is over {13}, so computer win this round...")
-                return "Computer is the winner"
+                return "Computer is the winner" , db_score ,C_score
             # if player reach target score
             if (P_score == 13):
                 print(f"Your total score is now equal {13}")
-                return ("Player is the winner")
+                return "Player is the winner" , db_score, P_score
             update(P_score, C_score)
             print("\n" + "\n")
         else:
@@ -126,7 +126,7 @@ def game_play():
             # if player score higher than target score
             if (C_score > 13):
                 print(f"Computer's total score is over {13}, so player win this round...")
-                return "Player is the winner"
+                return "Player is the winner" , db_score, P_score
             # if cp reach target score
             if (C_score == 13):
                 return ("Computer is the winner")
@@ -135,11 +135,11 @@ def game_play():
             break
             # This case will return the result of this round if both didnt go over target score
     if (P_score > C_score):
-        return "Player is the winner"
+        return "Player is the winner" , db_score, P_score
     elif (P_score < C_score):
-        return "Computer is the winner"
+        return "Computer is the winner" , db_score ,C_score
     else:
-        return "tie"
+        return "tie" , db_score
 
 
 # main
@@ -147,4 +147,7 @@ print("🎲🎲 Roll it to 13 🎲🎲")
 instruction()
 #target_score = int(check_int())
 result = game_play()
-print("\n" + "\n" + "\n" + result)
+if(game_play[1]):
+    print("\n" + "\n" + "\n" + result[0] + f", You gain x2 score, you will have {P_score} adding to your total score")
+elif game_play[1]== False:
+    print("\n" + "\n" + "\n" + result[0]+ f"and have {game_play[3]} adding to total score")
