@@ -104,9 +104,6 @@ def game_play():
                 print(f"Your total score is over {13}, so computer win this round...")
                 return "Computer is the winner" , db_score ,C_score
             # if player reach target score
-            if (P_score == 13):
-                print(f"Your total score is now equal {13}")
-                return "Player is the winner" , db_score, P_score
             update(P_score, C_score)
             print("\n" + "\n")
         else:
@@ -128,8 +125,6 @@ def game_play():
                 print(f"Computer's total score is over {13}, so player win this round...")
                 return "Player is the winner" , db_score, P_score
             # if cp reach target score
-            if (C_score == 13):
-                return "Computer is the winner" , db_score ,C_score
             update(P_score, C_score)
         if (signal_c > 0 and signal_p > 0):
             break
@@ -148,8 +143,8 @@ instruction()
 #target_score = int(check_int())
 result = game_play()
 if result[1]==True and result[0]=="Player is the winner":
-    print("\n" + "\n" + "\n" + str(result[0]) + f", You gain x2 score, you will have {str(result[2])} adding to your total score")
+    print("\n" + "\n" + "\n" + str(result[0]) + f", You gain x2 score, you will have {str(result[2])} points adding to your total score")
 elif result[1]== False and result[0]=="Player is the winner":
-    print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} adding to your total score")
+    print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to your total score")
 elif result[0]=="Computer is the winner":
-    print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} adding to their total score")
+    print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to his total score")
