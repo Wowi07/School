@@ -114,7 +114,7 @@ def game_play():
         # this if line is marking when cp reach target score - 3 and heading the round, the condition signal_c==0 to make sure that it just work 1 time
         if (((C_score >= P_score) and C_score >= 10) or (signal_p == 1 and (C_score > P_score))) and signal_c == 0:
             signal_c = 1
-            print("Computer is passing....")
+            print("Computer is passing...."+"\n"*2)
         if signal_c == 0:
             trash=input("Press <Enter>  It's computer turn....")
             temp = randnum()
@@ -134,7 +134,7 @@ def game_play():
     elif (P_score < C_score):
         return "Computer is the winner" , db_score ,C_score
     else:
-        return "tie" , db_score
+        return "tie" , db_score , int(P_score)
 
 
 # main
@@ -142,6 +142,7 @@ print("🎲🎲 Roll it to 13 🎲🎲")
 instruction()
 P_total=int(0)
 C_total=int(0)
+history= []
 target_score = int(check_int())
 while True:
     result = game_play()
@@ -155,11 +156,11 @@ while True:
         print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to his total score")
         C_total=C_total+int(result[2])
     elif result[0]=="tie":
-        print 
+        print (f"You guys are tie in this round with {result[2]} score; both of you. Your point will not be change  ")
     if C_total>=target_score:
         print("\n"*7 +f"The game is over, with {C_total} point total,    COMPUTER WIN THIS GAME 😎 🤖 .")
         break;
-    else:
+    elif P_total>=target_score:
         print("\n"*7 +f"The game is over, with {P_total} point total,    PLAYER WIN THIS GAME 🤫 🧏️   .")
         break;
     print(f"Computer total score is now {C_total}" + "\n"*2 + f"Player total score is now {P_total}")
