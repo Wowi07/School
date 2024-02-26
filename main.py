@@ -140,11 +140,26 @@ def game_play():
 # main
 print("🎲🎲 Roll it to 13 🎲🎲")
 instruction()
-#target_score = int(check_int())
-result = game_play()
-if result[1]==True and result[0]=="Player is the winner":
-    print("\n" + "\n" + "\n" + str(result[0]) + f", You gain x2 score, you will have {str(result[2])} points adding to your total score")
-elif result[1]== False and result[0]=="Player is the winner":
-    print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to your total score")
-elif result[0]=="Computer is the winner":
-    print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to his total score")
+P_total=int(0)
+C_total=int(0)
+target_score = int(check_int())
+while True:
+    result = game_play()
+    if result[1]==True and result[0]=="Player is the winner":
+        print("\n" + "\n" + "\n" + str(result[0]) + f", You gain x2 score, you will have {str(int(result[2]*2))} points adding to your total score")
+        P_total=P_total+(int(result[2])*2)
+    elif result[1]== False and result[0]=="Player is the winner":
+        print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to your total score")
+        P_total=P_total+int(result[2])
+    elif result[0]=="Computer is the winner":
+        print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to his total score")
+        C_total=C_total+int(result[2])
+    elif result[0]=="tie":
+        print 
+    if C_total>=target_score:
+        print("\n"*7 +f"The game is over, with {C_total} point total,    COMPUTER WIN THIS GAME 😎 🤖 .")
+        break;
+    else:
+        print("\n"*7 +f"The game is over, with {P_total} point total,    PLAYER WIN THIS GAME 🤫 🧏️   .")
+        break;
+    print(f"Computer total score is now {C_total}" + "\n"*2 + f"Player total score is now {P_total}")
