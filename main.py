@@ -102,7 +102,7 @@ def game_play():
             # if cp score higher than target score
             if (P_score > 13):
                 print(f"Your total score is over {13}, so computer win this round...")
-                return "Computer is the winner" , db_score ,C_score
+                return "Computer is the winner" , bool(db_score), int(P_score) ,int(C_score)    
             # if player reach target score
             update(P_score, C_score)
             print("\n" + "\n")
@@ -123,44 +123,81 @@ def game_play():
             # if player score higher than target score
             if (C_score > 13):
                 print(f"Computer's total score is over {13}, so player win this round...")
-                return "Player is the winner" , db_score, P_score
+                return "Player is the winner" , bool(db_score), int(P_score) ,int(C_score)    
             # if cp reach target score
             update(P_score, C_score)
         if (signal_c > 0 and signal_p > 0):
             break
             # This case will return the result of this round if both didnt go over target score
     if (P_score > C_score):
-        return "Player is the winner" , bool(db_score), int(P_score)
+        return "Player is the winner" , bool(db_score), int(P_score) ,int(C_score)
     elif (P_score < C_score):
-        return "Computer is the winner" , db_score ,C_score
+        return "Computer is the winner" , bool(db_score), int(P_score) ,int(C_score)    
     else:
-        return "tie" , db_score , int(P_score)
-
+        return 3 , bool(db_score), int(P_score) ,int(C_score)    
 
 # main
 print("🎲🎲 Roll it to 13 🎲🎲")
 instruction()
 P_total=int(0)
 C_total=int(0)
-history= []
+history_c= []
+history_p= []
+highest_score_c=0
+lowest_score_c=14
+highest_score_p=0
+lowest_score_p=14
+av_c=0 
+av_p=0
 target_score = int(check_int())
 while True:
+    #single round
+
     result = game_play()
+    highest_score_p=max(highest_score , result[2])
+    lowest_score_p=min(lowest_score , result[2])
+    highest_score_c=max(highest_score , result[3])
+    lowest_score_c=min(lowest_score , result[3])
+    history_c.append(result[3])
+    history_p.append(result[2])
+    av_c=av_c+result[3]
+    av_p=av_p+result[2]
+    #win or lose or tie
+        
+    # player win with double score
     if result[1]==True and result[0]=="Player is the winner":
         print("\n" + "\n" + "\n" + str(result[0]) + f", You gain x2 score, you will have {str(int(result[2]*2))} points adding to your total score")
         P_total=P_total+(int(result[2])*2)
+    # Player win without double score
     elif result[1]== False and result[0]=="Player is the winner":
         print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to your total score")
         P_total=P_total+int(result[2])
+    # Computer win 
     elif result[0]=="Computer is the winner":
-        print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[2])} points adding to his total score")
-        C_total=C_total+int(result[2])
+        print("\n" + "\n" + "\n" + str(result[0])+ f" and have {str(result[3])} points adding to his total score")
+        C_total=C_total+int(result[3])
+    # tie
     elif result[0]=="tie":
-        print (f"You guys are tie in this round with {result[2]} score; both of you. Your point will not be change  ")
+        print (f"You guys are tie in this round with {result[2]} score; both of you. You guys will have {result[2]} adding to total score  ")
+        C_total=C_total+result[2];
+        P_total=P_total+result[2];
+    
+    #who is the winner of the round
+    
     if C_total>=target_score:
         print("\n"*7 +f"The game is over, with {C_total} point total,    COMPUTER WIN THIS GAME 😎 🤖 .")
-        break;
     elif P_total>=target_score:
         print("\n"*7 +f"The game is over, with {P_total} point total,    PLAYER WIN THIS GAME 🤫 🧏️   .")
-        break;
+    
     print(f"Computer total score is now {C_total}" + "\n"*2 + f"Player total score is now {P_total}")
+
+#stat
+
+if(yes_no("Do you want to see the game history?")):
+    print("🎥 Game History ")
+    print("Player's history: ")
+    for i in history_p:
+        print(f"Round {int(i+1)}: Player got {history_p[i]} score   ||  Computer got {history_c[i]} score")
+print("📊📊 Game Statistics 📊📊")
+print(f"Player highest score : {highest_score_p}   ||  lowest score : {lowest_score_p}------- Average scorce : {float(av_p)/history_c.lenght}")
+print(f"Computer highest score : {highest_score_c}   ||  lowest score : {lowest_score_c}------- Average scorce : {float(av_c)/history_c.lenght}")
