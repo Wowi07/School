@@ -24,7 +24,7 @@ def check_int():
     while True:
         try:
             error = "Please enter an integer that is 13 or more."
-            num = int(input("Please enter your target score: "))
+            num = int(input("Please enter your target point: "))
             if (num < 13):
                 print(error)
             else:
