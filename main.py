@@ -68,8 +68,6 @@ def update(n1, n2):
 
 # gamepay in a single round
 def game_play():
-    input("Press <Enter> to start this round....")
-    print("\n" + "\n")
     # create variables
     s1 = randnum()
     s2 = randnum()
@@ -92,7 +90,7 @@ def game_play():
     print(f"Computer rolled {s3} and {s4}, computer's total score is {C_score}" + "\n" + "\n")
     update(P_score, C_score)
 
-    for i in range(0, int(10)):
+    while True:
         # player
         # only roll when signal_p==0, which mean if player pass 1 time, player cant roll again in this round
         if signal_p == 0 and yes_no("Do you want to continue rolling the dice? "):
@@ -150,14 +148,17 @@ lowest_score_p=14
 av_c=0 
 av_p=0
 target_score = int(check_int())
+tempp=0
 while True:
     #single round
-
+    tempp=tempp+1
+    input("Press <Enter> to start this round....")
+    print("\n"*10+f"👾👾   Round {tempp}  👾👾 ")
     result = game_play()
-    highest_score_p=max(highest_score , result[2])
-    lowest_score_p=min(lowest_score , result[2])
-    highest_score_c=max(highest_score , result[3])
-    lowest_score_c=min(lowest_score , result[3])
+    highest_score_p=max(highest_score_p , result[2])
+    lowest_score_p=min(lowest_score_p , result[2])
+    highest_score_c=max(highest_score_c , result[3])
+    lowest_score_c=min(lowest_score_c , result[3])
     history_c.append(result[3])
     history_p.append(result[2])
     av_c=av_c+result[3]
@@ -185,19 +186,21 @@ while True:
     #who is the winner of the round
     
     if C_total>=target_score:
-        print("\n"*7 +f"The game is over, with {C_total} point total,    COMPUTER WIN THIS GAME 😎 🤖 .")
+        print("\n"*7 +f"The game is over, with {C_total} point total."+"\n"+"    COMPUTER WIN THIS GAME 😎 🤖 .")
+        break;
     elif P_total>=target_score:
-        print("\n"*7 +f"The game is over, with {P_total} point total,    PLAYER WIN THIS GAME 🤫 🧏️   .")
+        print("\n"*7 +f"The game is over, with {P_total} point total."+"\n"+"    PLAYER WIN THIS GAME 🤫 🧏️   .")
+        break;
     
-    print(f"Computer total score is now {C_total}" + "\n"*2 + f"Player total score is now {P_total}")
+    print(f"Computer total score is now {C_total}" + "\n"*2 + f"Player total score is now {P_total}"+"\n")
 
 #stat
 
 if(yes_no("Do you want to see the game history?")):
     print("🎥 Game History ")
     print("Player's history: ")
-    for i in history_p:
-        print(f"Round {int(i+1)}: Player got {history_p[i]} score   ||  Computer got {history_c[i]} score")
+    for i in range (0 , tempp):
+        print(f"Round {int(i+1)}: Player got {history_p[i]} score  ||  Computer got {history_c[i]} score")
 print("📊📊 Game Statistics 📊📊")
-print(f"Player highest score : {highest_score_p}   ||  lowest score : {lowest_score_p}------- Average scorce : {float(av_p)/history_c.lenght}")
-print(f"Computer highest score : {highest_score_c}   ||  lowest score : {lowest_score_c}------- Average scorce : {float(av_c)/history_c.lenght}")
+print(f"😎 Player highest score : {highest_score_p}   ||  lowest score : {lowest_score_p}   -------  Average scorce : {float(av_p)/tempp}")
+print(f"🤖 Computer highest score : {highest_score_c}||  lowest score : {lowest_score_c}   -------  Average scorce : {float(av_c)/tempp}")
