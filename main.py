@@ -180,17 +180,17 @@ while True:
     # tie
     elif result[0]=="tie":
         print (f"You guys are tie in this round with {result[2]} score; both of you. You guys will have {result[2]} adding to total score  ")
-        C_total=C_total+result[2];
-        P_total=P_total+result[2];
+        C_total=C_total+int(result[2])
+        P_total=P_total+int(result[2])
     
     #who is the winner of the round
     
     if C_total>=target_score:
         print("\n"*7 +f"The game is over, with {C_total} point total."+"\n"+"    COMPUTER WIN THIS GAME 😎 🤖 .")
-        break;
+        break
     elif P_total>=target_score:
         print("\n"*7 +f"The game is over, with {P_total} point total."+"\n"+"    PLAYER WIN THIS GAME 🤫 🧏️   .")
-        break;
+        break
     
     print(f"Computer total score is now {C_total}" + "\n"*2 + f"Player total score is now {P_total}"+"\n")
 
