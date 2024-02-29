@@ -28,18 +28,85 @@ def yes_no(question):
 import random
 def cp():
     return random.randint(1, 3)
-def check_res(decision) :
+def cook(decision) :
     while True:
-        if decision == "r" or decision == "rock":
+        if decision == "r" or decision == "rock" or decision==1:
             return "rock" , "paper"
-        elif decision == "p" or decision == "paper":
-            return  "paper" , "rock"
-        elif decision == "s" or decision == "scissor":
-            return False
+        elif decision == "p" or decision == "paper" or decision == 2:
+            return  "paper" , "scissor"
+        elif decision == "s" or decision == "scissor" or decision == 3:
+            return "scissor" , "rock"
         else:
             print("You did not choose the valid response")
-
+            return 0 , 0
+def check_int():
+    print("How many rounds would you like? Press 0 to join the infinite mode")
+    while True:
+        try:
+            error="Please enter an integer bigger than 0 to play a requested rounds, or choose 0 to start inf mode"
+            choose=int(input())
+            if(choose<0):
+                print(error)
+            else:
+                return choose
+        except ValueError:
+            print(error)
 
 def game_play():
-    player = input("Please input your decision:  ")
+    #player's turn
+    print("Please input your decision:  ")
+    while True:
+        temp=input();
+        if(temp=="xxx"):
+            return "exit"
+        player=cook(temp);
+        if(player[0]==0):
+            continue;
+        break;
+    print("You choose " +player[0])
+    #computer's turn
+    print("It's computer turn 🤖")
+    print("Please press <Enter> to continue....")
+    input()
+    computer=cook(cp())
+    print("Computer choose "+ player[0])
+    #win or lose
+    if(player[1]==computer[0]):
+        return "Computer"
+    elif(player[0]==computer[0]):
+        return "Tie"
+    else:
+        return "Player"
+#main 
+print("💎📰✂️ Rock Paper Scissors ✂️📰💎") 
+if yes_no("Do you want to read the instruction?"):
+    instruction()
+#round choose
+loop=check_int()
+temps=0
+if(loop==0):
+    loop=loop-1
+while loop!=0:
+    temps=temps+1
+    input("Press <Enter> to start this round....")
+    print("\n"*10+f"👾👾   Round {temps}  👾👾 ")
+    res=game_play()
+    if(res=="exit"):
+        print("You chose exit...")
+        break;
+    if(res=="Computer"):
+        print("Computer win this round  🤖")
+    elif(res=="Player"):
+        print("Player win this round 🤫 🧏️")
+    else:
+        print("You guys are tie 🤝")
+    loop=loop-1
+#Stat 
+print("📊📊 Game Statistics 📊📊")
 
+    
+
+    
+    
+    
+    
