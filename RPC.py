@@ -17,8 +17,9 @@ def instruction():
 
     * Scissors beats paper''')
 def yes_no(question):
-    r=input(question + "  ").lower
+    print(question + "  ")
     while True:
+        r=input().lower()
         if r == "y" or r== "yes":
             return True
         elif r=="n" or r=="no":
@@ -69,7 +70,7 @@ def game_play():
     print("Please press <Enter> to continue....")
     input()
     computer=cook(cp())
-    print("Computer choose "+ player[0])
+    print("Computer choose "+ computer[0])
     #win or lose
     if(player[1]==computer[0]):
         return "Computer"
@@ -84,25 +85,38 @@ if yes_no("Do you want to read the instruction?"):
 #round choose
 loop=check_int()
 temps=0
+win=0 
+lose=0
 if(loop==0):
     loop=loop-1
 while loop!=0:
-    temps=temps+1
     input("Press <Enter> to start this round....")
-    print("\n"*10+f"👾👾   Round {temps}  👾👾 ")
+    print("\n"*10+f"👾👾   Round {temps+1}  👾👾 ")
     res=game_play()
     if(res=="exit"):
         print("You chose exit...")
         break;
+    temps=temps+1
     if(res=="Computer"):
-        print("Computer win this round  🤖")
+        print("Computer win this round  🤖 🫶")
+        print("\n"*2)
+        lose=lose+1
     elif(res=="Player"):
         print("Player win this round 🤫 🧏️")
+        win=win+1
     else:
         print("You guys are tie 🤝")
     loop=loop-1
 #Stat 
 print("📊📊 Game Statistics 📊📊")
+if temps!=0:
+    print(f"You played "+str(temps)+" rounds")
+    print(f"You won {win} rounds ; which is {(win*100)/temps}%")
+    print(f"You lose {lose} rounds ; which is {(lose*100)/temps}%")
+    print(f"You tie {temps-win-lose} rounds ; which is {100-((win*100)/temps)+((lose*100)/temps)}%")
+else:
+    print("You did not play any round...")
+
 
     
 
