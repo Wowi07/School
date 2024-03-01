@@ -52,7 +52,6 @@ def check_int():
                 return choose
         except ValueError:
             print(error)
-
 def game_play():
     #player's turn
     print("Please input your decision:  ")
@@ -111,9 +110,12 @@ while loop!=0:
 print("📊📊 Game Statistics 📊📊")
 if temps!=0:
     print(f"You played "+str(temps)+" rounds")
-    print(f"You won {win} rounds ; which is {(win*100)/temps}%")
-    print(f"You lose {lose} rounds ; which is {(lose*100)/temps}%")
-    print(f"You tie {temps-win-lose} rounds ; which is {100-((win*100)/temps)+((lose*100)/temps)}%")
+    win=(float(win)*100)/float(temps)
+    print(f"You won {win} rounds ; which is {win}%")
+    lose=(float(lose)*100)/float(temps)
+    print(f"You lose {lose} rounds ; which is {lose}%")
+    temps=100-win-lose
+    print(f"You tie {temps-win-lose} rounds ; which is {temps}%")
 else:
     print("You did not play any round...")
 
