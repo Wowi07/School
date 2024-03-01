@@ -101,7 +101,8 @@ while loop!=0:
         print("\n"*2)
         lose=lose+1
     elif(res=="Player"):
-        print("Player win this round 🤫 🧏️")
+        print("Player win this round 🤫 🧏️ ")
+        print("\n"*2)
         win=win+1
     else:
         print("You guys are tie 🤝")
@@ -109,13 +110,16 @@ while loop!=0:
 #Stat 
 print("📊📊 Game Statistics 📊📊")
 if temps!=0:
-    print(f"You played "+str(temps)+" rounds")
+    tie=temps-win-lose
+    print(f"You played "+str(temps)+" rounds:")
+    wins=win
     win=(float(win)*100)/float(temps)
-    print(f"You won {win} rounds ; which is {win}%")
+    print(f"You won {wins} rounds ; which is {win}%")
+    loses=lose
     lose=(float(lose)*100)/float(temps)
-    print(f"You lose {lose} rounds ; which is {lose}%")
-    temps=100-win-lose
-    print(f"You tie {temps-win-lose} rounds ; which is {temps}%")
+    print(f"You lose {loses} rounds ; which is {lose}%")
+    temps=(float(tie)*100)/float(temps)
+    print(f"You tie {tie} rounds ; which is {temps}%")
 else:
     print("You did not play any round...")
 
