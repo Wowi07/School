@@ -16,6 +16,9 @@ def instruction():
     * Rock beats scissors
 
     * Scissors beats paper''')
+history_p=[]
+history_c=[]
+history_r=[]
 def yes_no(question):
     print(question + "  ")
     while True:
@@ -30,16 +33,15 @@ import random
 def cp():
     return random.randint(1, 3)
 def cook(decision) :
-    while True:
-        if decision == "r" or decision == "rock" or decision==1:
-            return "rock" , "paper"
-        elif decision == "p" or decision == "paper" or decision == 2:
-            return  "paper" , "scissor"
-        elif decision == "s" or decision == "scissor" or decision == 3:
-            return "scissor" , "rock"
-        else:
-            print("You did not choose the valid response")
-            return 0 , 0
+    if decision == "r" or decision == "rock" or decision==1:
+        return "rock" , "paper"
+    elif decision == "p" or decision == "paper" or decision == 2:
+        return  "paper" , "scissor"
+    elif decision == "s" or decision == "scissor" or decision == 3:
+        return "scissor" , "rock"
+    else:
+        print("You did not choose the valid response")
+        return 0 , 0
 def check_int():
     print("How many rounds would you like? Press 0 to join the infinite mode")
     while True:
@@ -63,12 +65,14 @@ def game_play():
         if(player[0]==0):
             continue;
         break;
+    history_p.append(player[0])
     print("You choose " +player[0])
     #computer's turn
     print("It's computer turn 🤖")
     print("Please press <Enter> to continue....")
     input()
     computer=cook(cp())
+    history_c.append(computer[0])
     print("Computer choose "+ computer[0])
     #win or lose
     if(player[1]==computer[0]):
@@ -87,7 +91,7 @@ temps=0
 win=0 
 lose=0
 if(loop==0):
-    loop=loop-1
+    loop=loop-1 
 while loop!=0:
     input("Press <Enter> to start this round....")
     print("\n"*10+f"👾👾   Round {temps+1}  👾👾 ")
@@ -97,16 +101,24 @@ while loop!=0:
         break;
     temps=temps+1
     if(res=="Computer"):
+        history_r.append("Computer won this round 🤖 🫶")
         print("Computer win this round  🤖 🫶")
         print("\n"*2)
         lose=lose+1
     elif(res=="Player"):
+        history_r.append("Player won this round 🤫 🧏️")
         print("Player win this round 🤫 🧏️ ")
         print("\n"*2)
         win=win+1
     else:
+        history_r.append("You guys were tie this round 🤝")
         print("You guys are tie 🤝")
     loop=loop-1
+#history 
+if yes_no("Do you want to see the history?"):
+    for i in range (0,temps):
+        print(f'''Round {i}:  
+Player chose {history_p}   ; Computer chose {history_c} ~~~ So {history_r}''')
 #Stat 
 print("📊📊 Game Statistics 📊📊")
 if temps!=0:
