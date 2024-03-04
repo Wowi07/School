@@ -116,9 +116,10 @@ while loop!=0:
     loop=loop-1
 #history 
 if yes_no("Do you want to see the history?"):
+    print("🕰🕰 Game history 🕰🕰️")
     for i in range (0,temps):
-        print(f'''Round {i}:  
-Player chose {history_p}   ; Computer chose {history_c} ~~~ So {history_r}''')
+        print(f'''Round {i+1}:  
+Player chose {history_p[i]}   ; Computer chose {history_c[i]} ~~~ So {history_r[i]}''')
 #Stat 
 print("📊📊 Game Statistics 📊📊")
 if temps!=0:
