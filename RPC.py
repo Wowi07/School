@@ -116,6 +116,7 @@ while loop!=0:
     loop=loop-1
 #history 
 if yes_no("Do you want to see the history?"):
+    print("\n"*10)
     print("🕰🕰 Game history 🕰🕰️")
     for i in range (0,temps):
         print(f'''Round {i+1}:  
