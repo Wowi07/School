@@ -9,3 +9,56 @@ def instruction():
   -Each time you guess wrong, your score will be minus by 1
   ***🍀🍀 Good Luck 🍀🍀***
   ''')
+def yes_no(question):
+    print(question+"? ")
+    while True:
+        ans=input().lower()
+        if ans=="y" or ans=="yes":
+            return True
+        elif ans=="n" or ans=="no":
+            return False
+        else:
+            print("You do not input a valid response")
+
+def rangee(greater):
+    error=f"Please choose the number that greater than {greater}."
+    try:
+        while True:
+            ans=input()
+            if int(ans)>int(greater):
+                return ans 
+            else:
+                print(error)
+    except ValueError:
+       print(error)
+def check_int():
+    error=f"Please choose the number that greater than -1, choose 0 to start the infinite mode."
+    try:
+        while True:
+            ans=input()
+            if int(ans)>0:
+                return ans 
+            elif ans == 0:
+                return -1
+            else:
+                print(error)
+    except ValueError:
+       print(error)
+def gold_rank_ans(n):
+    return int(log2(n))
+#main 
+if yes_no("Do you want to read an instruction"):
+    instruction()
+print("How many round you want? Input 0 to start an infinite mode")
+temps=int(check_int())
+while temps!=0:
+    temps=temps-1
+    print("      Your range...🤏")
+    print("Please enter the number on the left of your range  ",end=(""))
+    left=rangee(0)
+    print("Please enter the number on the right of your range",end=(""))
+    right=rangee(left)
+    print(f"Your guessing range is from {left} to {right}")
+    
+
+
