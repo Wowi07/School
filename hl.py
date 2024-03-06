@@ -1,3 +1,4 @@
+import math
 def instruction():
   print(''' 
   - You can either choose the number of rounds or they can opt for infinite mode(by pressing 0).
@@ -25,7 +26,10 @@ def rangee(greater):
     try:
         while True:
             ans=input()
-            if int(ans)>int(greater+2):
+            if ans=="xxx":
+                return "exit"
+            ans=int(ans)
+            if ans>int(greater+2):
                 return ans 
             else:
                 print(error)
@@ -38,7 +42,7 @@ def check_int():
             ans=input()
             if int(ans)>0:
                 return ans 
-            elif ans == 0:
+            elif int(ans) == 0:
                 return -1
             else:
                 print(error)
@@ -54,6 +58,7 @@ def game_play(left,right):
     dup=[]
     times=0
     number=random.randint(int(left),int(right))
+    print(f"Testing only:{number}")
     while True:
         player=0 
         print("What number is the mystery number🤔❓     ",end=(""))
@@ -92,7 +97,6 @@ silver_medal=0
 bronze_medal=0 
 medal=[]
 history=[]
-highest_point=0 
 print("How many round you want? Input 0 to start an infinite mode")
 temps=int(check_int())
 rounds=0
@@ -101,18 +105,27 @@ while temps!=0:
     temps=temps-1
     print("      Your range...🤏")
     print("Please enter the number on the left of your range  ",end=(""))
-    left=int(rangee(-2))
+    left=rangee(-2)
+    if left=="exit":
+        print("You choose exit...")
+        break;
+    left=int(left)
     print("Please enter the number on the right of your range(minimum range is 4)   ",end=(""))
     right=rangee(left)
+    if right=="exit":
+        print("You choose exit...")
+        break;
+    right=int(right)
     print(f"Your guessing range is from {left} to {right}")
     time=game_play(left,right)
-    if(time=="xxx"):
+    if(time=="exit"):
+        print("You choose exit...")
         break;
     time=int(time)
     rounds+=1
     #ranking the result
-    rangeee=int(right)-int(left)+1
-    if time<=round(log2(rangeee)):
+    rangeee=right-left+1
+    if time<=round(math.log2(rangeee)):
         print("Congratulation!! You get the golden medal on this round🥇")
         golden_medal=golden_medal+1
         medal.append("🥇")
@@ -124,16 +137,18 @@ while temps!=0:
         print("You can do better next time, you get the bronze medal on this round🥉 ")
         bronze_medal=bronze_medal+1
         medal.append("🥉")
-    print(f"You get {rangeee-time} points on this round")
-    history.append(rangeee-times)
+    print(f"You get {rangeee-time+1} points on this round")
+    history.append(rangeee-time+1)
 ##history
 if rounds==0:
     print("You did not play any round")
 else:
     lowest_point=history[0]
+    highest_point=history[0]
     haha=0
     for i in history:
         lowest_point=min(lowest_point,i)
+        highest_point=max(highest_point,i)
         haha=haha+i
     if yes_no("Do you want to see the history"):
         for i in range (0,rounds):
@@ -144,9 +159,9 @@ else:
     print(f"Highest point: {highest_point}   || Lowest point: {lowest_point}")
     print(f"Your average points is {haha/rounds}"+"\n"*2)
     print("🥇🥈🥉"+"\n")
-    print(f"You got {golden_medal} golden medal 🥇")
-    print(f"        {silver_medal} silver medal 🥈")
-    print(f"        {bronze_medal} bronze medal 🥉")
+    print(f"You got {golden_medal} golden medal(s) 🥇")
+    print(f"        {silver_medal} silver medal(s) 🥈")
+    print(f"        {bronze_medal} bronze medal(s) 🥉")
     
     
         
