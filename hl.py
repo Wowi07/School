@@ -97,11 +97,14 @@ silver_medal=0
 bronze_medal=0 
 medal=[]
 history=[]
+infinite=""
 print("How many round you want? Input 0 to start an infinite mode")
 temps=int(check_int())
+if(temps==-1):
+    infinite="(♾ infinite mode ♾)"
 rounds=0
 while temps!=0:
-    print(f"👾👾 Round {rounds+1}👾👾")
+    print(f"👾👾 Round {rounds+1}👾👾 "+infinite)
     temps=temps-1
     print("      Your range...🤏")
     print("Please enter the number on the left of your range  ",end=(""))
