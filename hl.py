@@ -58,10 +58,11 @@ def game_play(left,right):
     dup=[]
     times=0
     number=random.randint(int(left),int(right))
+    number=6
     print(f"Testing only:{number}")
     while True:
         player=0 
-        print("What number is the mystery number🤔❓     ",end=(""))
+        print("What number you think it is the mystery number🤔❓     ",end=(""))
         while True:
             try:
                 player=input()
