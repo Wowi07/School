@@ -40,6 +40,8 @@ def check_int():
     while True:
         try:
             ans=input()
+            if(ans=="xxx"):
+                return "exit"
             if int(ans)>0:
                 return ans 
             elif int(ans) == 0:
@@ -54,12 +56,12 @@ def check_int():
 # silver_ans(n):
 #int(n/2)
 import random
-def game_play(left,right):
+def game_play(left,right,testing):
     dup=[]
     times=0
     number=random.randint(int(left),int(right))
-    number=6
-    print(f"Testing only:{number}")
+    if(testing==1):
+        print(f"Testing only:{number}")
     while True:
         player=0 
         print("What number you think it is the mystery number🤔❓     ",end=(""))
@@ -91,6 +93,9 @@ def game_play(left,right):
         print(f"Your guessing times: {times}")
 #main 
 print("    👆 👆 👆  Higher Lower Game 👇 👇 👇 ")
+testing=0
+if yes_no("Do you want to play in testing mode"):
+    testing=1
 if yes_no("Do you want to read an instruction"):
     instruction()
 golden_medal=0 
@@ -98,51 +103,57 @@ silver_medal=0
 bronze_medal=0 
 medal=[]
 history=[]
+exit=0
 infinite=""
 print("How many round you want? Input 0 to start an infinite mode")
-temps=int(check_int())
-if(temps==-1):
-    infinite="(♾ infinite mode ♾)"
+temps=check_int()
 rounds=0
-while temps!=0:
-    print(f"👾👾 Round {rounds+1}👾👾 "+infinite)
-    temps=temps-1
-    print("      Your range...🤏")
-    print("Please enter the number on the left of your range  ",end=(""))
-    left=rangee(-2)
-    if left=="exit":
-        print("You choose exit...")
-        break;
-    left=int(left)
-    print("Please enter the number on the right of your range(minimum range is 4)   ",end=(""))
-    right=rangee(left)
-    if right=="exit":
-        print("You choose exit...")
-        break;
-    right=int(right)
-    print(f"Your guessing range is from {left} to {right}")
-    time=game_play(left,right)
-    if(time=="exit"):
-        print("You choose exit...")
-        break;
-    time=int(time)
-    rounds+=1
-    #ranking the result
-    rangeee=right-left+1
-    if time<=round(math.log2(rangeee)):
-        print("Congratulation!! You get the golden medal on this round🥇")
-        golden_medal=golden_medal+1
-        medal.append("🥇")
-    elif time<=int((rangeee*75)/100):
-        print("Nice try... You get the silver medal on this round 🥈")
-        silver_medal=silver_medal+1
-        medal.append("🥈")
-    else:
-        print("You can do better next time, you get the bronze medal on this round🥉 ")
-        bronze_medal=bronze_medal+1
-        medal.append("🥉")
-    print(f"You get {rangeee-time+1} points on this round")
-    history.append(rangeee-time+1)
+if temps=="exit":
+    print("You choose exit...")
+    exit=1
+if exit==0:
+    temps=int(temps)
+    if(temps==-1):
+        infinite="(♾ infinite mode ♾)"
+    while temps!=0:
+        print(f"👾👾 Round {rounds+1}👾👾 "+infinite)
+        temps=temps-1
+        print("      Your range...🤏")
+        print("Please enter the number on the left of your range  ",end=(""))
+        left=rangee(-2)
+        if left=="exit":
+            print("You choose exit...")
+            break;
+        left=int(left)
+        print("Please enter the number on the right of your range(minimum range is 4)   ",end=(""))
+        right=rangee(left)
+        if right=="exit":
+            print("You choose exit...")
+            break;
+        right=int(right)
+        print(f"Your guessing range is from {left} to {right}")
+        time=game_play(left,right,testing)
+        if(time=="exit"):
+            print("You choose exit...")
+            break;
+        time=int(time)
+        rounds+=1
+        #ranking the result
+        rangeee=right-left+1
+        if time<=round(math.log2(rangeee)):
+            print("Congratulation!! You get the golden medal on this round🥇")
+            golden_medal=golden_medal+1
+            medal.append("🥇")
+        elif time<=int((rangeee*75)/100):
+            print("Nice try... You get the silver medal on this round 🥈")
+            silver_medal=silver_medal+1
+            medal.append("🥈")
+        else:
+            print("You can do better next time, you get the bronze medal on this round🥉 ")
+            bronze_medal=bronze_medal+1
+            medal.append("🥉")
+        print(f"You get {rangeee-time+1} points on this round")
+        history.append(rangeee-time+1)
 ##history
 if rounds==0:
     print("You did not play any round")
