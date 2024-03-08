@@ -17,6 +17,32 @@ def yes_no(question):
       return True
     else:
       print("You do not input the valid response")
-def playing_talk():
+talk_win=[]
+talk_lose=[]
+talk_playing=[]
+def playing_talk_win():
+    
+def playing_talk_lose():
+    
+def playing_talk_playing():
+def game_round():
+    input("How many rounds you want to play? (input 0 to join an infinite mode)")
+    while True:
+        error="Please enter an integer greater than 0, or enter 0 to join an infinite mode"
+        try:
+            ans=input()
+            if(ans=="xxx"):
+                return "exit"
+            ans=int(ans)
+            if(ans>0):
+                return ans 
+            elif(ans==0):
+                return -1
+            else:
+                print(error)
+        except ValueError:
+            print(error)
+        
+#main 
+if yes_no("Do you want to read the instruction")
   
-
