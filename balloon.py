@@ -46,6 +46,7 @@ def game_round():
 #main 
 if yes_no("Do you want to read the instruction")
   instruction()
+
   
   
   
