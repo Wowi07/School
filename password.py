@@ -3,18 +3,32 @@ def instruction():
         This is the problem...
 -Huy created his laptop's password and made it changes everyday. 
 -His first time of changing password is in 31th December 2020.
--The password today is the sum of a list of number from 0 to n, with n is the day since his first time of changing password.(if n=2, today is 2nd Jan and the password is 3)
+-The password today is the sum of a list of number from 0 to n, with n is the day since his first time of changing password.
+(if n=2, today is 2nd Jan and the password is 3)
 -The program will display a random day before 1st Jan 2024
+-You will have 4 times to answer.
+-You can input exit code "xxx" to exit the rounds
+-If you want to exit the game, you just have to say "no" when program display "Do you want to continue?"
 -Your mission is input the password of his laptop on that day, goodluck....
 ''')
-print("      Password💻🔑")
+def yes_no(question):
+    print(question + "  ")
+    while True:
+        r=input().lower()
+        if r == "y" or r== "yes":
+            return True
+        elif r=="n" or r=="no":
+            return False
+        else:
+            print("You did not choose the valid response")
 import random
 def year(n):
-    return int(n/356)
-def month(n):
-    if n==2:
+    return int(n/365)
+def months(m):
+    m=int(m)
+    if m==2:
         return 28
-    elif (n%2!=0 and n<8) or (n%2==0 and n>=8):
+    elif (m%2!=0 and m<8) or (m%2==0 and m>=8):
         return 31
     else:
         return 30
@@ -53,26 +67,66 @@ def player():
             return ans 
         except ValueError:
             print("Please input a valid response...")
+history=[]
+turns=[]
 def quiz():
     n=random.randint(1,1095)
+    haha=int(n)
     ##count the years
     years=year(n)
-    n=n-years*356
+    n=n-years*365
     month=1
     #count the month
     for i in range(1,13):
-        temp=int(month(i))
-        if n<i:
+        temp=months(i)
+        if n<temp:
             break;
         else:
             n=n-temp
             month=month+1
-    ans=((n+1)*n)/2
-    print(f"What is the password in {n} {month_change(month)} {years+2021}?  ",end="")
-    p=int(player())
+    n=int(n)
+    ans=int(((haha+1)*haha)/2)
+    if n%10==1:
+        n=str(n)+"st"
+    elif n%10==2:
+        n=str(n)+"nd"
+    elif n%10==3:
+        n=str(n)+"rd"
+    else:
+        n=str(n)+"th"
+    print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
     for i in range(1,4):
+        p=int(player())
+        if p=="exit":
+            print("You choose exit...")
+            break;
         if p==ans:
             print("😱 🎉 That's a correct answer!!!!!!!!")
+            turns.append(i)
+            history.append(p)
+            break
         else:
             print("Sorry, it's not the correct answer....")
-            print(f"You only have {})
+            if(i!=4):
+                print(f"You only have {4-i} turn(s) left...")
+            else:
+                print("😶 Sorry, you're out of turn...")
+                history.append("Sadly, you did not have any correct answer in that momment...")
+                turns.append(4) 
+    return 0
+#main 
+print("      Password💻🔑")
+#print(month(2)) 
+if yes_no("Do you want to read an instruction"):
+    instruction()
+rounds=1
+while True:
+    print(f"Quizz {1}...")
+    quiz()
+    if yes_no("Do you want to continue"):
+        rounds=rounds+1 
+    else:
+        break
+    
+            
+            
