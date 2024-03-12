@@ -58,8 +58,8 @@ def month_change(n):
     if n=="12":
         return "December"
 def player():
-    ans=input()
     while True:
+        ans=input()
         try:
             if(ans=="xxx"):
                 return "exit"
@@ -75,9 +75,13 @@ def quiz():
     ##count the years
     years=year(n)
     n=n-years*365
+
     month=1
     #count the month
     for i in range(1,13):
+        if n==0:
+            month=12
+            break;
         temp=months(i)
         if n<temp:
             break;
@@ -86,6 +90,9 @@ def quiz():
             month=month+1
     n=int(n)
     ans=int(((haha+1)*haha)/2)
+    print(ans)
+    if n==0:
+        n=31
     if n%10==1:
         n=str(n)+"st"
     elif n%10==2:
@@ -94,7 +101,7 @@ def quiz():
         n=str(n)+"rd"
     else:
         n=str(n)+"th"
-    print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
+    print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2020}?  ",end="")
     for i in range(1,4):
         p=int(player())
         if p=="exit":
