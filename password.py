@@ -12,7 +12,7 @@ def instruction():
 -Your mission is input the password of his laptop on that day, goodluck....
 ''')
 def yes_no(question):
-    print(question + "  ")
+    print(question + "?  ")
     while True:
         r=input().lower()
         if r == "y" or r== "yes":
@@ -21,6 +21,23 @@ def yes_no(question):
             return False
         else:
             print("You did not choose the valid response")
+def rounds():
+    while True:
+        error="Please input an integer greater than -1, input 0 to start an infinite mode..."
+        try:
+            ans=input()
+            if(ans=="xxx"):
+                return "exit"
+            ans=int(ans)
+            if ans<0:
+                print(error)
+            elif ans==0:
+                return -1
+            else:
+                return ans
+            return ans 
+        except ValueError:
+            print(error)
 import random
 def year(n):
     return int(n/365)
@@ -71,16 +88,17 @@ history=[]
 turns=[]
 def quiz():
     n=random.randint(1,1095)
+    print(n)
     haha=int(n)
     ##count the years
     years=year(n)
     n=n-years*365
-
     month=1
     #count the month
     for i in range(1,13):
         if n==0:
             month=12
+            years=years-1
             break;
         temp=months(i)
         if n<temp:
@@ -101,7 +119,7 @@ def quiz():
         n=str(n)+"rd"
     else:
         n=str(n)+"th"
-    print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2020}?  ",end="")
+    print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
     for i in range(1,4):
         p=int(player())
         if p=="exit":
