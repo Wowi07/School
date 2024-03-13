@@ -21,7 +21,7 @@ def yes_no(question):
             return False
         else:
             print("You did not choose the valid response")
-def rounds():
+def how_many_rounds():
     while True:
         error="Please input an integer greater than -1, input 0 to start an infinite mode..."
         try:
@@ -84,8 +84,15 @@ def player():
             return ans 
         except ValueError:
             print("Please input a valid response...")
+#history save the result of each round
 history=[]
+#turns letme know how many times they need to gave the right answer
 turns=[]
+#quiz_content save the content of quiz(for example: 1st September 2022,...)
+quiz_content=[]
+round_win=0 
+sum_guesses_used=0
+#each round
 def quiz():
     n=random.randint(1,1095)
     print(n)
@@ -120,38 +127,58 @@ def quiz():
     else:
         n=str(n)+"th"
     print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
+    quiz_content.append(n+" "+str(month_change(str(month)))+" "+str(years+2021))
     for i in range(1,4):
         p=int(player())
         if p=="exit":
             print("You choose exit...")
-            break;
+            return "exit"
         if p==ans:
             print("😱 🎉 That's a correct answer!!!!!!!!")
             turns.append(i)
-            history.append(p)
+            history.append(f"You guessed the right answer in that round with {i} time(s) of guessing"+"   The answer is "+str(ans))
+            sum_guesses_used=sum_guesses_used+i
+            round_win=round_win+1
             break
         else:
             print("Sorry, it's not the correct answer....")
-            if(i!=4):
-                print(f"You only have {4-i} turn(s) left...")
+            if(i!=3):
+                print(f"You only have {3-i} turn(s) left...")
             else:
                 print("😶 Sorry, you're out of turn...")
-                history.append("Sadly, you did not have any correct answer in that momment...")
-                turns.append(4) 
-    return 0
+                print("The answer is "+str(ans))
+                history.append("Sadly, you did not have any correct answer in that moment..."+"    The answer is "+str(ans))
+                turns.append(3) 
+                sum_guesses_used=sum_guesses_used+i
+    return "0"
 #main 
 print("      Password💻🔑")
 #print(month(2)) 
 if yes_no("Do you want to read an instruction"):
     instruction()
-rounds=1
-while True:
-    print(f"Quizz {1}...")
-    quiz()
-    if yes_no("Do you want to continue"):
-        rounds=rounds+1 
-    else:
-        break
+rounds=0
+print("How many rounds you want to play? ",end="")
+#haha just the the variable to count how many round left till it reach 0
+haha=how_many_rounds()
+#play? is that variable to mark that they exit and dont want to play any round
+playy=True
+if(haha=="exit"):
+    print("You choose exit")
+    playy=False
     
+if playy:
+    while haha!=0:
+        print(f"Quizz {rounds+1}...")
+        what_now=quiz()
+        if what_now
+        rounds=rounds+1
+        haha=haha-1
+    if yes_no("Do you want to see your history"):
+        while i in range(1,rounds+1):
+            print(f"Round {i}"+"\n"+f"The quiz is what is that password in {quiz_content[i-1]}: ")
+            print(history[i-1])
+            
+    
+        
             
             
