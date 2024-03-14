@@ -1,14 +1,15 @@
 def instruction():
-    print('''This program can generate the quiz 
+    print('''
         This is the problem...
--Huy created his laptop's password and made it changes everyday. 
+-Huy's just bought a new laptop ASUS TUF GAMING A15. To make sure, he created his laptop ASUS TUF GAMING A15's password
+and made it changes everyday. 
 -His first time of changing password is in 31th December 2020.
 -The password today is the sum of a list of number from 0 to n, with n is the day since his first time of changing password.
 (if n=2, today is 2nd Jan and the password is 3)
--The program will display a random day before 1st Jan 2024
--You will have 4 times to answer.
+-The program will display a random day since 1st January 2021 to 31th December 2023 
+-First of all, you can pick the number of round you want to play or play "solve til out of question" mode by input 0
+-You will have 3 times to answer.
 -You can input exit code "xxx" to exit the rounds
--If you want to exit the game, you just have to say "no" when program display "Do you want to continue?"
 -Your mission is input the password of his laptop on that day, goodluck....
 ''')
 def yes_no(question):
@@ -23,7 +24,7 @@ def yes_no(question):
             print("You did not choose the valid response")
 def how_many_rounds():
     while True:
-        error="Please input an integer greater than -1, input 0 to start an infinite mode..."
+        error="Please input an integer greater than -1, input 0 to start a solve-til-out-of-question mode..."
         try:
             ans=input()
             if(ans=="xxx"):
@@ -33,7 +34,7 @@ def how_many_rounds():
                 print(error)
                 continue
             elif ans==0:
-                return -1
+                return 1095
             else:
                 return ans
             return ans 
@@ -93,9 +94,10 @@ turns=[]
 quiz_content=[]
 round_win=0 
 sum_guesses_used=0
+dup_quiz=[]
 #each round
-def quiz():
-    n=random.randint(1,1095)
+def quiz(n):
+    dup=[]
     print(n)
     haha=int(n)
     ##count the years
@@ -130,13 +132,19 @@ def quiz():
     print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
     quiz_content.append(n+" "+str(month_change(str(month)))+" "+str(years+2021))
     for i in range(1,4):
-        p=player()
-        if p=="exit":
-            print("You choose exit...")
-            return "exit"
-        p=int(p)
+        while True:
+            p=player()
+            if p=="exit":
+                print("You choose exit...")
+                return "exit"
+            if p in dup:
+                print("You'd already input this answer...")
+            else:
+                p=int(p)
+                dup.append(p)
+                break;
         if p==ans:
-            print("😱 🎉 That's a correct answer!!!!!!!!")
+            print("😱 🎉 That's a correct answer!!!!!!!!"+"\n"*3)
             turns.append(i)
             history.append(f"You guessed the right answer in that round with {i} time(s) of guessing"+"   The answer is "+str(ans))
             return i
@@ -146,10 +154,11 @@ def quiz():
                 print(f"You only have {3-i} turn(s) left...")
             else:
                 print("😶 Sorry, you're out of turn...")
-                print("The answer is "+str(ans))
+                print("The answer is "+str(ans)+"\n"*3)
                 history.append("Sadly, you did not have any correct answer in that moment..."+"    The answer is "+str(ans))
                 turns.append(3) 
-    return "0"
+                return 4
+
 #main 
 print("      Password💻🔑")
 #print(month(2)) 
@@ -168,9 +177,17 @@ if(haha=="exit"):
 if playy:
     while haha!=0:
         print(f"Quizz {rounds+1}...")
-        what_now=quiz()
-        if what_now=="0":
+        #avoid from duplicate the quiz
+        while True:
+            n=random.randint(1,1095)
+            if n in dup_quiz:
+                continue
+            dup_quiz.append(n)
+            break
+        what_now=quiz(n)
+        if what_now==4:
             rounds=rounds+1
+            sum_guesses_used=sum_guesses_used+int(what_now)-1
             haha=haha-1
         elif what_now=="exit":
             break
