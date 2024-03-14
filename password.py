@@ -7,7 +7,7 @@ and made it changes everyday.
 -The password today is the sum of a list of number from 0 to n, with n is the day since his first time of changing password.
 (if n=2, today is 2nd Jan and the password is 3)
 -The program will display a random day since 1st January 2021 to 31th December 2023 
--First of all, you can pick the number of round you want to play or play "solve til out of question" mode by input 0
+-First of all, you can pick the number of round you want to play or play "solve_til_out_of_question" mode by input 0
 -You will have 3 times to answer.
 -You can input exit code "xxx" to exit the rounds
 -Your mission is input the password of his laptop on that day, goodluck....
@@ -24,7 +24,7 @@ def yes_no(question):
             print("You did not choose the valid response")
 def how_many_rounds():
     while True:
-        error="Please input an integer greater than -1, input 0 to start a solve-til-out-of-question mode..."
+        error="Please input an integer greater than -1, input 0 to start a solve_til_out_of_question mode..."
         try:
             ans=input()
             if(ans=="xxx"):
@@ -34,6 +34,7 @@ def how_many_rounds():
                 print(error)
                 continue
             elif ans==0:
+                print("You choose solve_til_out_of_question mode")
                 return 1095
             else:
                 return ans
@@ -41,8 +42,10 @@ def how_many_rounds():
         except ValueError:
             print(error)
 import random
+# how many years in n day(s)
 def year(n):
     return int(n/365)
+# return how many days on that month
 def months(m):
     m=int(m)
     if m==2:
@@ -51,6 +54,7 @@ def months(m):
         return 31
     else:
         return 30
+#change the month from number to string form
 def month_change(n):
     if n=="1":
         return "January"
@@ -76,6 +80,7 @@ def month_change(n):
         return "November"
     if n=="12":
         return "December"
+# control the input of player
 def player():
     while True:
         ans=input()
@@ -86,24 +91,21 @@ def player():
             return ans 
         except ValueError:
             print("Please input a valid response...")
-#history save the result of each round
-history=[]
-#turns letme know how many times they need to gave the right answer
-turns=[]
-#quiz_content save the content of quiz(for example: 1st September 2022,...)
-quiz_content=[]
-round_win=0 
-sum_guesses_used=0
-dup_quiz=[]
+history=[] #history save the result of each round
+turns=[] #turns letme know how many times they need to gave the right answer
+quiz_content=[] #quiz_content save the content of quiz each round(for example: 1st September 2022,...)
+round_win=0 #count how many round player won
+sum_guesses_used=0 #count how many turn player used in whole game
+dup_quiz=[] #save all the question to prevent program from generate the same quiz
+
 #each round
 def quiz(n):
-    dup=[]
-    print(n)
+    dup=[] #this dup created to prevent player from input the same answer in a particular round
+    #print(n)
     haha=int(n)
-    ##count the years
-    years=year(n)
-    n=n-years*365
-    month=1
+    years=year(n) #count the years
+    n=n-years*365 #subtract the days on "years" years
+    month=1 #initial month is 1, to make it easier to count the month
     #count the month
     for i in range(1,13):
         if n==0:
@@ -116,12 +118,13 @@ def quiz(n):
         else:
             n=n-temp
             month=month+1
-    n=int(n)
+    # caculate the consecutive list(1 to n). This's the right answer
     ans=int(((haha+1)*haha)/2)
-    print(ans)
+    #print(ans)
+    #these line just adding the st,nd,rd or th to the day
     if n==0:
         n=31
-    if n%10==1:
+    if n%10==1: #btw, i used %10 to take the last number of n
         n=str(n)+"st"
     elif n%10==2:
         n=str(n)+"nd"
@@ -129,53 +132,59 @@ def quiz(n):
         n=str(n)+"rd"
     else:
         n=str(n)+"th"
+    #display the question 
     print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
+    #add the question into quiz_content, to print it then in the history
     quiz_content.append(n+" "+str(month_change(str(month)))+" "+str(years+2021))
+    #range (1,4) which mean 1 to 3. So player has 3 times to answer
     for i in range(1,4):
+        #i had to use the loop to make sure that player input the valid value
         while True:
             p=player()
             if p=="exit":
                 print("You choose exit...")
                 return "exit"
+            #this condition mean if player'd already answer that number
             if p in dup:
                 print("You'd already input this answer...")
-            else:
+            else: #this else mean if player has a valid input(no duplicated ans), im gonna break this loop
                 p=int(p)
                 dup.append(p)
                 break;
-        if p==ans:
+        if p==ans: #correct condition
             print("😱 🎉 That's a correct answer!!!!!!!!"+"\n"*3)
-            turns.append(i)
+            turns.append(i) #save the turns player used on this round
+            #save the result to display then in history
             history.append(f"You guessed the right answer in that round with {i} time(s) of guessing"+"   The answer is "+str(ans))
+            #return how many turn player used to adding to sum_guesses_used 
             return i
-        else:
+        else:   #this else mean if player gave the wrong answer
             print("Sorry, it's not the correct answer....")
-            if(i!=3):
-                print(f"You only have {3-i} turn(s) left...")
-            else:
+            if(i!=3): #only display the turn left if it's !=0
+                print(f"You only have {3-i} turn(s) left...")   #display how many turn left
+            else:   #if player give a wrong answer and out of turn
                 print("😶 Sorry, you're out of turn...")
                 print("The answer is "+str(ans)+"\n"*3)
                 history.append("Sadly, you did not have any correct answer in that moment..."+"    The answer is "+str(ans))
                 turns.append(3) 
-                return 4
+                return 4 #i return 4 instead of 3 bc i need to mark if player lose this round
 
 #main 
 print("      Password💻🔑")
 #print(month(2)) 
 if yes_no("Do you want to read an instruction"):
     instruction()
-rounds=0
+rounds=0 #this variable was created to mark how many rounds player played
 print("How many rounds you want to play? ",end="")
 #haha just the the variable to count how many round left till it reach 0
 haha=how_many_rounds()
-#play? is that variable to mark that they exit and dont want to play any round
+#playy is that variable to mark that they exit and dont want to play any round
 playy=True
 if(haha=="exit"):
     print("You choose exit")
     playy=False
-    
-if playy:
-    while haha!=0:
+if playy:   #only play when player didn't want to exit in above input
+    while haha!=0: #i'll minus the haha by 1 every round til it reach 0
         print(f"Quizz {rounds+1}...")
         #avoid from duplicate the quiz
         while True:
@@ -185,26 +194,29 @@ if playy:
             dup_quiz.append(n)
             break
         what_now=quiz(n)
-        if what_now==4:
+        if what_now==4: #if player lost
             rounds=rounds+1
-            sum_guesses_used=sum_guesses_used+int(what_now)-1
-            haha=haha-1
+            haha=haha-1 #i only +1 to rounds here because sometimes, player can exit in above line,
+            #so if I +1 too early, i will get the wrong output bc player didnt play that round
+            sum_guesses_used=sum_guesses_used+int(what_now)-1# i'll add how many turn they used
         elif what_now=="exit":
-            break
-        else:
-            sum_guesses_used=sum_guesses_used+int(what_now)
+            break   #break to exit and go straight to history and Statistics
+        else: #if player win
+            sum_guesses_used=sum_guesses_used+int(what_now)# i'll add how many turn they used
             rounds=rounds+1
             haha=haha-1
-            round_win=round_win+1
-if rounds!=0:
+            round_win=round_win+1 #i'll +1 to round_win to mark that they have 1 more win.
+
+if rounds!=0: #i only display the history and Statistics if player'd alr played at least 1 round
     if yes_no("Do you want to see your history"):
-        for i in range(1,rounds+1):
+        for i in range(1,rounds+1): # i is also stand for the current round i want to print
             print("🕰🕰 Game history 🕰🕰️")
-            print(f"Round {i}"+"\n"+f"The quiz is what is that password in {quiz_content[i-1]}: ")
+            print(f"Round {i}"+"\n"+f"The quiz is what is that password in {quiz_content[i-1]}: ") 
+            #i had to print quiz_content[i-1] instead of quiz_content[i] bc i my start-value in position 0
             print(history[i-1])
     print("📊📊 Game Statistics 📊📊")
     print(f"You played {rounds} round(s)")
-    print(f"You won {round_win} round(s)🎉  ||  You used about {int(sum_guesses_used/rounds)} turn(s) to guess per round")
+    print(f"You won {round_win} round(s)🎉, {int((round_win*100)/rounds)}%  ||  You used about {int(sum_guesses_used/rounds)} turn(s) to guess per round")
 else:
     print("You did not play any round...")
             
