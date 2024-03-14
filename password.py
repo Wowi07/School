@@ -31,6 +31,7 @@ def how_many_rounds():
             ans=int(ans)
             if ans<0:
                 print(error)
+                continue
             elif ans==0:
                 return -1
             else:
@@ -129,17 +130,16 @@ def quiz():
     print(f"What is the password in {n} "+str(month_change(str(month)))+ f" {years+2021}?  ",end="")
     quiz_content.append(n+" "+str(month_change(str(month)))+" "+str(years+2021))
     for i in range(1,4):
-        p=int(player())
+        p=player()
         if p=="exit":
             print("You choose exit...")
             return "exit"
+        p=int(p)
         if p==ans:
             print("😱 🎉 That's a correct answer!!!!!!!!")
             turns.append(i)
             history.append(f"You guessed the right answer in that round with {i} time(s) of guessing"+"   The answer is "+str(ans))
-            sum_guesses_used=sum_guesses_used+i
-            round_win=round_win+1
-            break
+            return i
         else:
             print("Sorry, it's not the correct answer....")
             if(i!=3):
@@ -149,7 +149,6 @@ def quiz():
                 print("The answer is "+str(ans))
                 history.append("Sadly, you did not have any correct answer in that moment..."+"    The answer is "+str(ans))
                 turns.append(3) 
-                sum_guesses_used=sum_guesses_used+i
     return "0"
 #main 
 print("      Password💻🔑")
@@ -170,13 +169,27 @@ if playy:
     while haha!=0:
         print(f"Quizz {rounds+1}...")
         what_now=quiz()
-        if what_now
-        rounds=rounds+1
-        haha=haha-1
+        if what_now=="0":
+            rounds=rounds+1
+            haha=haha-1
+        elif what_now=="exit":
+            break
+        else:
+            sum_guesses_used=sum_guesses_used+int(what_now)
+            rounds=rounds+1
+            haha=haha-1
+            round_win=round_win+1
+if rounds!=0:
     if yes_no("Do you want to see your history"):
-        while i in range(1,rounds+1):
+        for i in range(1,rounds+1):
+            print("🕰🕰 Game history 🕰🕰️")
             print(f"Round {i}"+"\n"+f"The quiz is what is that password in {quiz_content[i-1]}: ")
             print(history[i-1])
+    print("📊📊 Game Statistics 📊📊")
+    print(f"You played {rounds} round(s)")
+    print(f"You won {round_win} round(s)🎉  ||  You used about {int(sum_guesses_used/rounds)} turn(s) to guess per round")
+else:
+    print("You did not play any round...")
             
     
         
