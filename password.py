@@ -119,28 +119,31 @@ dup_quiz = []  # save all the question to prevent program from generate the same
 def quiz(n):
     dup = []  # this dup created to prevent player from input the same answer in a particular round
     # print(n)
+    #haha is the variable which save the initial number of days on single a round
     haha = int(n)
     years = year(n)  # count the years
     n = n - years * 365  # subtract the days on "years" years
     month = 1  # initial month is 1, to make it easier to count the month
     # count the month
     for i in range(1, 13):
-        if n == 0:
+        if n == 0 and i==1:
             month = 12
             years = years - 1
-            break;
+            break
         temp = months(i)
         if n < temp:
-            break;
+            break
         else:
             n = n - temp
             month = month + 1
+        if n==0:
+            n=n+temp 
+            month=month-1
     # calculate the consecutive list(1 to n). This is the right answer
     ans = int(((haha + 1) * haha) / 2)
     # print(ans)
     # these line just adding the st,nd,rd or th to the day
-    if n == 0:
-        n = 31
+
     if n % 10 == 1:  # btw, i used %10 to take the last number of n
         n = str(n) + "st"
     elif n % 10 == 2:
@@ -196,7 +199,7 @@ print("      Password💻🔑")
 if yes_no("Do you want to read the instructions"):
     instruction()
 rounds = 0  # this variable was created to mark how many rounds player played
-print("How many rounds do you want to play? ", end="")
+print("How many rounds do you want to play?(input 0 to start a STOOP mode) ", end="")
 # haha just the variable to count how many round left till it reach 0
 haha = how_many_rounds()
 STOOP = ""
@@ -245,7 +248,3 @@ if rounds != 0:  # i only display the history and Statistics if player'd alr pla
         f"You won {round_win} round(s)🎉, {int((round_win * 100) / rounds)}%  ||  You used about {int(sum_guesses_used / rounds)} turn(s) to guess per round")
 else:
     print("You did not play any round...")
-
-
-
-
