@@ -6,7 +6,7 @@ and made it change everyday.
 -His first time of changing his password is in 31th December 2020.
 -The password today is the sum of a list of numbers from 0 to n, with n is the day since his first time of changing password.
 (if n=2, today is 2nd Jan 2021 and the password is 3)
--The program will display a random day since 1st January 2021 to 31th December 2023 
+-The program will display a random day from 1st January 2021 to 31th December 2023 
 -First of all, you can pick the number of rounds you want to play or play "solve_til_out_of_problem"(STOOP) mode by input 0
 -You will have 3 turns to answer.
 -You can input the exit code "xxx" to exit the rounds
