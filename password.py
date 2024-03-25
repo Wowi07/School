@@ -63,32 +63,7 @@ def months(m):
         return 30
 
 
-# change the month from number to string form
-def month_change(n):
-    if n == "1":
-        return "January"
-    if n == "2":
-        return "February"
-    if n == "3":
-        return "March"
-    if n == "4":
-        return "April"
-    if n == "5":
-        return "May"
-    if n == "6":
-        return "June"
-    if n == "7":
-        return "July"
-    if n == "8":
-        return "August"
-    if n == "9":
-        return "September"
-    if n == "10":
-        return "October"
-    if n == "11":
-        return "November"
-    if n == "12":
-        return "December"
+
 
 
 # control the input of player
@@ -110,7 +85,8 @@ quiz_content = []  # quiz_content save the content of quiz each round(for exampl
 round_win = 0  # count how many round player won
 sum_guesses_used = 0  # count how many turn player used in whole game
 dup_quiz = []  # save all the question to prevent program from generate the same quiz
-
+# change the month from number to string form
+months_in_word=["???","January","February","March","April","May","June","July","August","September","October","November","December"]
 # each round
 def quiz(n):
     dup = []  # this dup created to prevent player from input the same answer in a particular round
@@ -141,8 +117,13 @@ def quiz(n):
     ans = int(((initial_quiz + 1) * initial_quiz) / 2)
     # print(ans)
     # these line just adding the st,nd,rd or th to the day
-
-    if n % 10 == 1:  # btw, i used %10 to take the last number of n
+    if n==11:
+        n = str(n) + "th"
+    elif n == 12:  
+        n = str(n) + "th"
+    elif n == 13:  
+        n = str(n) + "th"
+    elif n % 10 == 1:   # btw, i used %10 to take the last number of n
         n = str(n) + "st"
     elif n % 10 == 2:
         n = str(n) + "nd"
@@ -151,9 +132,9 @@ def quiz(n):
     else:
         n = str(n) + "th"
     # display the question
-    print(f"What is the password in {n} " + str(month_change(str(month))) + f" {years + 2021}?  ", end="")
+    print(f"What is the password in {n} " + months_in_word[month] + f" {years + 2021}?  ", end="")
     # add the question into quiz_content, to print it then in the history
-    quiz_content.append(n + " " + str(month_change(str(month))) + " " + str(years + 2021))
+    quiz_content.append(n + " " + months_in_word[month] + " " + str(years + 2021))
     # range (1,4) which mean 1 to 3. So player has 3 times to answer
     for i in range(1, 4):
         # i had to use the loop to make sure that player input the valid value
