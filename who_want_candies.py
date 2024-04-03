@@ -12,4 +12,15 @@ you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round
     """)
 def yes_no(question):
     print(question)
+    error="You did not choose a valid response"
     while True:
+        try:
+            response=input().lower()
+            if response=="y" or response=="yes":
+                return True
+            if response=="n" or response=="no":
+                return False
+            else:
+                print(error)
+        except ValueError:
+            print(error)
