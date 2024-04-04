@@ -24,3 +24,64 @@ def yes_no(question):
                 print(error)
         except ValueError:
             print(error)
+def how_many_rounds():
+    while True:
+        error = "Please input an integer greater than 0 or input 0 to start an infinite mode...♾"
+        try:
+            ans = input()
+            if (ans == "xxx"):
+                return "exit"
+            ans = int(ans)
+            if ans < 0:
+                print(error)
+                continue
+            elif ans == 0:
+                print("♾ You choose infinite mode♾ ")
+                return -1
+            else:
+                return ans
+            return ans
+        except ValueError:
+            print(error)
+def change_symbol(s):
+    if s==1:
+        return "+"
+    if s==2:
+        return "-"
+    if s==3:
+        return "x"
+    if s==4:
+        return "/"
+def difficulty_choosing():
+    while True:
+        error = "Please input a valid response"
+        response=input("""Please choose the following difficulty by input the first letter or full word.
+    * Easy  (|a|,|b|<=10).
+    * Normal(|a|,|b|<=1000).
+    * Hard  (|a|,|b|<=10000000).""").lower()
+        if response=="easy" or response=="e":
+            return 10,1 
+        if response=="normal" or response=="n":
+            return 1000,2 
+        if response=="hard" or response=="h":
+            return 10000000,3
+        print(error)
+
+#main 
+import random
+if yes_no("Do you want to read the instructions?  "):
+    instructions()
+rounds=how_many_rounds()
+#create quiz
+symbol=random.randint(1,4)
+difficulty=difficulty_choosing()
+
+
+
+
+    
+
+
+
+
+
