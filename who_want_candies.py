@@ -1,10 +1,10 @@
-def instruction():
+def instructions():
     print("""     Who want candies? 🍬🍭
 - Grandma want to test your calculate skill by asking tons of quiz about plus(+), minus(-), multiply(x) or divide(/) 2 numbers 'a' and 'b'.
 - Before she give you a quiz, you can choose a difficulty of a quiz which is:
-    * Easy  (|a|,|b|<=10).
-    * Normal(|a|,|b|<=1000).
-    * Hard  (|a|,|b|<=10000000).
+    * 🟩 Easy  (|a|,|b|<=10).
+    * 🟨 Normal(|a|,|b|<=1000).
+    * 🟥 Hard  (|a|,|b|<=10000000).
 - With the divide quiz, you must round the answer to the nearest interger number(eg: 1.98 will be 2, 0.12 will be 0), if there is x.5(like 1.5 or 7.5) 
 you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round to 8, 10.5 round to 10).
 - Every correct answer, you will have 1 candy(Easy), 2 candies(Normal) and 3 candies(Hard).
@@ -25,6 +25,7 @@ def yes_no(question):
         except ValueError:
             print(error)
 def how_many_rounds():
+    print("How many rounds you want to play?( input 0 to start an infinite mode...♾)")
     while True:
         error = "Please input an integer greater than 0 or input 0 to start an infinite mode...♾"
         try:
@@ -56,14 +57,18 @@ def difficulty_choosing():
     while True:
         error = "Please input a valid response"
         response=input("""Please choose the following difficulty by input the first letter or full word.
-    * Easy  (|a|,|b|<=10).
-    * Normal(|a|,|b|<=1000).
-    * Hard  (|a|,|b|<=10000000).""").lower()
+    * 🟩 Easy  (|a|,|b|<=10).
+    * 🟨 Normal(|a|,|b|<=1000).
+    * 🟥 Hard  (|a|,|b|<=10000000).
+""").lower()
         if response=="easy" or response=="e":
+            print("You choose an Easy quiz🟩")
             return 10,1 
         if response=="normal" or response=="n":
+            print("You choose a Normal quiz🟨")
             return 1000,2 
         if response=="hard" or response=="h":
+            print("You choose a Hard quiz🟥")
             return 10000000,3
         print(error)
 
@@ -72,9 +77,12 @@ import random
 if yes_no("Do you want to read the instructions?  "):
     instructions()
 rounds=how_many_rounds()
+difficulty=difficulty_choosing()
 #create quiz
 symbol=random.randint(1,4)
-difficulty=difficulty_choosing()
+a=random.randint(difficulty[0]*(-1),difficulty[0])
+b=random.randint(difficulty[0]*(-1),difficulty[0])
+print(f"What is the answer of {a} {change_symbol(symbol)} {b}")
 
 
 
