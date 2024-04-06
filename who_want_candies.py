@@ -118,14 +118,17 @@ def single_round(boundary):
         if player_answer==correct_answer:
             result_history.append(f"You gave a correct answer in this round which is {correct_answer}...")
             turn_used_that_round.append(i)
-            return True
+            return True,i
         duplicated_answer.append(player_answer)
     print(f"The correct answer is {correct_answer}")
     result_history.append(f"You didn't give any correct answer in this round, the answer is {correct_answer}...")
     turn_used_that_round.append(i)
-    return False
+    return False,3
 
 #main 
+#statistics variable
+total_win_round=0
+total_guesses=0
 player_total_candy=0
 if yes_no("Do you want to read the instructions?  "):
     instructions()
@@ -152,7 +155,9 @@ if exit_sign:
         if single_round_result=="exit":
             print("👵 Ok sweetie...")
             break
-        elif single_round_result:
+        elif single_round_result[0]:
+            total_win_round=total_win_round+1
+            total_guesses=total_guesses+single_round_result[1]
             print(win_speech)
             player_total_candy=player_total_candy+level[1]
             print(level[2])
@@ -160,15 +165,23 @@ if exit_sign:
         else:
             print(lose_speech)
             print(f"You don't get any candy in this round, so your total candy is still {player_total_candy}...")
+            total_guesses=total_guesses+3
         rounds_left=rounds_left-1
         current_round=current_round+1
 if current_round==1:
     print("You did not played any round...")
 else:
     if yes_no("Do you want to see the history?  "):
-        current_round=1
-        
-
+        print("     🕰️ History 🕰️")
+        for i in range(1,current_round):
+            print(f"    Round {i}:   ")
+            print(f"Quiz:   ",quiz_content[i-1],"?")
+            print(f"({turn_used_that_round[i-1]} turn(s) used)",result_history[i-1])
+    #statistics
+    print("     📊 Statistics 📊")
+    print(f"You played {current_round-1} round(s)")
+    print(f"Total rounds you gave a correct answer is {total_win_round} round(s)  ({(total_win_round*100)/(current_round-1)}%)")
+    print(f"You used about {int((total_guesses)/(current_round-1))} turn(s) per round. ")
 
 
 
