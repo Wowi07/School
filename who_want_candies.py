@@ -14,6 +14,7 @@ you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round
 - If you need a break, just say “I wanna sleep grandma” to end the game.(She won’t let you leave if you are not saying a correct sentence).
              ~~ Don't make grandma sad.😉
     """)
+# This function return yes or no only depends on player response
 def yes_no(question):
     print(question)
     error="You did not choose a valid response"
@@ -28,6 +29,7 @@ def yes_no(question):
                 print(error) 
         except ValueError:
             print(error)
+# i use this one when i want to know how many rounds player wanna play
 def how_many_rounds():
     print("How many rounds you want to play?( input 0 to start an infinite mode ♾️  ...)")
     error = "Please input an integer greater than 0 or input 0 to start an infinite mode ♾️  ..."
@@ -47,6 +49,7 @@ def how_many_rounds():
                 return ans
         except ValueError:
             print(error)
+# change number to operator
 def change_symbol(s):
     if s==1:
         return "+"
@@ -56,6 +59,7 @@ def change_symbol(s):
         return "x"
     if s==4:
         return "/"
+
 def level_choosing():
     print("""Please choose the following level by input the first letter or full word.
     * 🟩 Easy  (|a|,|b|<=10).
