@@ -29,7 +29,7 @@ def yes_no(question):
                 print(error) 
         except ValueError:
             print(error)
-# i use this one when i want to know how many rounds player wanna play
+# I use this one when I want to know how many rounds player wanna play
 def how_many_rounds():
     print("How many rounds you want to play?( input 0 to start an infinite mode ♾️  ...)")
     error = "Please input an integer greater than 0 or input 0 to start an infinite mode ♾️  ..."
@@ -59,7 +59,7 @@ def change_symbol(s):
         return "x"
     if s==4:
         return "/"
-
+# This function will return a level player chose
 def level_choosing():
     print("""Please choose the following level by input the first letter or full word.
     * 🟩 Easy  (|a|,|b|<=10).
@@ -81,6 +81,7 @@ def level_choosing():
             print("You choose a Hard quiz🟥")
             return 10000000,3,"You get 3 candies from this round 🟥"
         print(error)
+# This function return the answer of quiz
 def calculate_the_answer(a,b,operator):
     if operator==1:
         return a+b
@@ -95,6 +96,7 @@ quiz_content=[]
 result_history=[]
 turn_used_that_round=[]
 import random
+# single round here
 def single_round(boundary):
     #create quiz
     symbol=random.randint(1,4)
@@ -104,6 +106,7 @@ def single_round(boundary):
     quiz_content.append(f"What is the answer of {a} {change_symbol(symbol)} {b}")
     correct_answer=calculate_the_answer(a,b,symbol)
     duplicated_answer=[]
+    # this will loop 3 times stand for 3 times answer question
     for i in range(1,4):
         print(f"You have {3-i+1} turn(s) left to answer...")
         while True:
@@ -123,6 +126,7 @@ def single_round(boundary):
             result_history.append(f"You gave a correct answer in this round which is {correct_answer}...")
             turn_used_that_round.append(i)
             return True,i
+        #add the player_answer into duplicated_answer to mark that they have alr inputted this answer
         duplicated_answer.append(player_answer)
     print(f"The correct answer is {correct_answer}")
     result_history.append(f"You didn't give any correct answer in this round, the answer is {correct_answer}...")
@@ -140,9 +144,13 @@ win_speech="🎉 Haaaa, grandma is proud of you 🎉"
 lose_speech="😒 Grandma is kinda disappointed about you 🤔"
 exit_sign=True
 rounds_left=how_many_rounds()
+# in how_many_rounds() function, i will return "exit" if player input an exit code
+# so if they wanna exit, i will change the exit_sign from True to False to mark that
+# they wanted to exit
 if rounds_left=="exit":
     print("👵 Ok sweetie...")
     exit_sign=False
+# infinite_mode created because i wanna show "  ♾️  Infinite mode ♾️" if player chose inf mode
 infinite_mode=""
 if rounds_left==-1:
     infinite_mode="  ♾️  Infinite mode ♾️"
@@ -151,10 +159,16 @@ if exit_sign:
     while rounds_left!=0:
         print("\n"*3)
         print(f"Round {current_round}"+infinite_mode)
+        #level will contain 
+        #level[0] : a boundary to random
+        #level[1] : how manycandy player can get if they win 
+        #level[2]:  winning speech
         level=level_choosing()
+        #once again, my level_choosing() will return "exit" if player inputted an exit code
         if level=="exit":
             print("👵 Ok sweetie...")
             break
+        # single_round_result is a variable which contains True or False stand for win or lose, and how many turn(s) they used
         single_round_result=single_round(level[0])
         if single_round_result=="exit":
             print("👵 Ok sweetie...")
