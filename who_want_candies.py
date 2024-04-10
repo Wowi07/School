@@ -100,13 +100,16 @@ import random
 def single_round(boundary):
     #create quiz
     symbol=random.randint(1,4)
+    #random.randint(boundary*(-1),boundary) mean i will random a number from -boundary to boundary
+    # eg: if my boundary is 10, so i will random a number from -10 to 10
     a=random.randint(boundary*(-1),boundary)
     b=random.randint(boundary*(-1),boundary)
     print(f"What is the answer of {a} {change_symbol(symbol)} {b}")
     quiz_content.append(f"What is the answer of {a} {change_symbol(symbol)} {b}")
     correct_answer=calculate_the_answer(a,b,symbol)
+    # duplicated_answer is an array created to save player's answers
     duplicated_answer=[]
-    # this will loop 3 times stand for 3 times answer question
+    # this will loop 3 times stand for 3 times answer the question
     for i in range(1,4):
         print(f"You have {3-i+1} turn(s) left to answer...")
         while True:
