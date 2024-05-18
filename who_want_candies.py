@@ -1,3 +1,4 @@
+# this function display the instruction whenever it called
 def instructions():
     print("""
 - Grandma want to test your calculate skill by asking tons of quiz about plus(+), minus(-), multiply(x) or divide(/) 2 numbers 'a' and 'b' 
@@ -11,7 +12,7 @@ def instructions():
 you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round to 8, 10.5 round to 10).
 - Every correct answer, you will have 1 candy(Easy), 2 candies(Normal) and 3 candies(Hard).
 - You will have 3 times to answer each grandma's question.
-- If you need a break, just say “I wanna sleep grandma” to end the game.(She won’t let you leave if you are not saying a correct sentence).
+- If you need a break, just say “I wanna sleep grandma” to end.(She won’t let you leave if you are not saying a correct sentence).
              ~~ Don't make grandma sad.😉
     """)
 def yes_no(question):
@@ -28,18 +29,24 @@ def yes_no(question):
                 print(error) 
         except ValueError:
             print(error)
+#this function return the number of round depends on user's input
 def how_many_questions():
     print("How many questions you want to answer?( input 0 to start an infinite mode ♾️  ...)")
     error = "Please input an integer greater than 0 or input 0 to start an infinite mode ♾️  ..."
     while True:
         try:
+            #i know, it's interger, but i also have to check if players wanna leave the game here, so i have to change all cap letters to lower
             ans = input().lower()
+            # check if they wanna leave, if they want, return "exit"
             if (ans == "i wanna sleep grandma"):
                 return "exit"
+            # i assign ans into an interger, so i can check if player input an interger or not, if not, it will get value error and go straight to line 52, then go back to line 36 bc of the loop
             ans = int(ans)
+            #if player input the number that below 0, it will print error message and go back to line 36 bc of the loop
             if ans < 0:
                 print(error)
                 continue
+            #inf mode
             elif ans == 0:
                 print("♾️  You choose an infinite mode ♾️")
                 return -1
@@ -47,6 +54,11 @@ def how_many_questions():
                 return ans
         except ValueError:
             print(error)
+# "s" is a variable that stored an interger from 1-4, each number stand for an operator
+# 1 -> +
+# 2 -> -
+# 3 -> x
+# 4 -> /
 def change_symbol(s):
     if s==1:
         return "+"
@@ -56,6 +68,7 @@ def change_symbol(s):
         return "x"
     if s==4:
         return "/"
+# this function will return boundary, candy player will get if they win, and the winning speech
 def level_choosing():
     print("""Please choose the following level by input the first letter or full word.
     * 🟩 Easy  (|a|,|b|<=10).
@@ -77,6 +90,7 @@ def level_choosing():
             print("You choose a Hard quiz🟥")
             return 10000000,3,"You get 3 candies from this question 🟥"
         print(error)
+# this function return the answer of the quiz
 def calculate_the_answer(a,b,operator):
     if operator==1:
         return a+b
@@ -91,6 +105,8 @@ quiz_content=[]
 result_history=[]
 turn_used_that_question=[]
 import random
+# this function will: generate the quiz, receive and check player answer, return the result of that quiz
+
 def single_quiz(boundary):
     #create quiz
     symbol=random.randint(1,4)
@@ -133,26 +149,33 @@ player_total_candy=0
 print("     Who want candies? 🍬🍭")
 if yes_no("Do you want to read the instructions?  "):
     instructions()
-correct_speech="🎉 Haaaa, grandma is proud of you 🎉"
+correct_speech=["🎉 Haaaa, grandma is proud of you 🎉","👵: Take the candy my love🍭, I have more for you😊","👵: Well done darling😊","👵: You are doing great😄","👵: Good job, take this new flavour candy🍬","👵: If you're keep doing great like this, i'll need more candies next time😄"]
 incorrect_speech="😒 Grandma is kinda disappointed about you 🤔"
 exit_sign=True
 questions_left=how_many_questions()
+#if player wanna leave, the return of how_many_questions gonna be "exit"
+# i created exit_sign to mark that player wanna play or not
 if questions_left=="exit":
     print("👵 Ok sweetie...")
     exit_sign=False
 infinite_mode=""
+#if player chose inf mode, i'll change the value of infinite_mode, 
+#infinite_mode is used to display the words if player chose inf mode, if not, it will display nothing
 if questions_left==-1:
     infinite_mode="  ♾️  Infinite mode ♾️"
 question_answered=1
 if exit_sign:
-    #Game runs if player did not exit yet
+    #Game runs if player did not exit or did not out of questions
     while questions_left!=0:
         print("\n"*3)
         print(f"Question {question_answered}? "+infinite_mode)
         level=level_choosing()
+        # exit this loop if they input the exit code inside of level_choosing
         if level=="exit":
             print("👵 Ok sweetie...")
             break
+        # exit this loop if they input the exit code inside of single_quiz()
+        #single_quiz_result is now contain the result in that question ( result: win or not(true or false), how many times player answer)
         single_quiz_result=single_quiz(level[0])
         if single_quiz_result=="exit":
             print("👵 Ok sweetie...")
