@@ -170,7 +170,7 @@ if exit_sign:
     #Game runs if player did not exit or did not out of questions
     while questions_left!=0:
         print("\n"*3)
-        print(f"Question {question_answered}? "+infinite_mode)
+        print(f"Question {question_answered} "+infinite_mode)
         level=level_choosing()
         # exit this loop if they input the exit code inside of level_choosing
         if level=="exit":
