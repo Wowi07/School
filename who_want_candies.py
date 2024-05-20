@@ -152,7 +152,7 @@ if yes_no("Do you want to read the instructions?  "):
 #i created correct and incorrect speech as a list, so whenever i get the question result, i will random a number (from 0-6) stand for the position of speech i will display
 # for eg: if player won, I got 2, then the program will display "👵: Well done darling😊"
 correct_speech=["🎉 Haaaa, grandma is proud of you 🎉","👵: Take the candy my love🍭, I have more for you😊","👵: Well done darling😊","👵: You are doing great😄","👵: Good job, take this new flavour candy🍬","👵: If you're keep doing great like this, i'll need more candies next time😄"]
-incorrect_speech=[" Grandma is kinda disappointed about you 😓","👵: Seems like you don't like this candy flavor🥲","👵: That's ok darling, you just need to practice more","👵: Ha, try more if you want those candies my love😊","👵: That's fine, relax darling","👵: Is that question too hard, my love?🥲","👵: next time, just answer when you are ready, I won't force you darling😊"]
+incorrect_speech=[" Grandma is kinda disappointed about you 😓","👵: Seems like you don't like this candy flavor🥲","👵: That's ok darling, you just need to practice more","👵: Ha, try more if you want those candies my love😊","👵: That's fine, relax darling","👵: Is that question too hard, my love?","👵: next time, just answer when you are ready, I won't force you darling😊"]
 exit_sign=True
 questions_left=how_many_questions()
 #if player wanna leave, the return of how_many_questions gonna be "exit"
