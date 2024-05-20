@@ -1,14 +1,14 @@
 # this function display the instruction whenever it called
 def instructions():
     print("""
-- Grandma want to test your calculate skill by asking tons of quiz about plus(+), minus(-), multiply(x) or divide(/) 2 numbers 'a' and 'b' 
+- Grandma want to test your calculate skill by asking tons of question about plus(+), minus(-), multiply(x) or divide(/) 2 numbers 'a' and 'b' 
 (a+b,a-b,a x b or a/b).
-- Before she give you a quiz, you can choose level of a quiz which is: 
+- Before she give you a question, you can choose level of a question which is: 
     * 🟩 Easy  (|a|,|b|<=10).
     * 🟨 Normal(|a|,|b|<=1000).
     * 🟥 Hard  (|a|,|b|<=10000000).
 - In any level, you still have a chance to get an easy question even in hard mode.
-- With the divide quiz, you must question the answer to the nearest integer number(eg: 1.98 will be 2, 0.12 will be 0), if there is x.5(like 1.5 or 7.5) 
+- With the divide question, you must question the answer to the nearest integer number(eg: 1.98 will be 2, 0.12 will be 0), if there is x.5(like 1.5 or 7.5) 
 you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round to 8, 10.5 round to 10).
 - Every correct answer, you will have 1 candy(Easy), 2 candies(Normal) and 3 candies(Hard).
 - You will have 3 times to answer each grandma's question.
@@ -81,16 +81,16 @@ def level_choosing():
         if (response == "i wanna sleep grandma"):
             return "exit"
         if response=="easy" or response=="e":
-            print("You choose an Easy quiz🟩")
+            print("You choose an Easy question🟩")
             return 10,1,"You get 1 candy from this question 🟩"
         if response=="normal" or response=="n":
-            print("You choose a Normal quiz🟨")
+            print("You choose a Normal question🟨")
             return 1000,2 ,"You get 2 candies from this question 🟨"
         if response=="hard" or response=="h":
-            print("You choose a Hard quiz🟥")
+            print("You choose a Hard question🟥")
             return 10000000,3,"You get 3 candies from this question 🟥"
         print(error)
-# this function return the answer of the quiz
+# this function return the answer of the question
 def calculate_the_answer(a,b,operator):
     if operator==1:
         return a+b
@@ -101,19 +101,19 @@ def calculate_the_answer(a,b,operator):
     if operator==4:
         return round(a/b)
 #history variables
-quiz_content=[]
+question_content=[]
 result_history=[]
 turn_used_that_question=[]
 import random
-# this function will: generate the quiz, receive and check player answer, return the result of that quiz
+# this function will: generate the question, receive and check player answer, return the result of that question
 
-def single_quiz(boundary):
-    #create quiz
+def single_question(boundary):
+    #create question
     symbol=random.randint(1,4)
     a=random.randint(boundary*(-1),boundary)
     b=random.randint(boundary*(-1),boundary)
     print(f"What is the answer of {a} {change_symbol(symbol)} {b}")
-    quiz_content.append(f"What is the answer of {a} {change_symbol(symbol)} {b}")
+    question_content.append(f"What is the answer of {a} {change_symbol(symbol)} {b}")
     correct_answer=calculate_the_answer(a,b,symbol)
     duplicated_answer=[]
     for i in range(1,4):
@@ -176,16 +176,16 @@ if exit_sign:
         if level=="exit":
             print("👵 Ok sweetie...")
             break
-        # exit this loop if they input the exit code inside of single_quiz()
-        #single_quiz_result is now contain the result in that question ( result: win or not(true or false), how many times player answer)
-        single_quiz_result=single_quiz(level[0])
-        if single_quiz_result=="exit":
+        # exit this loop if they input the exit code inside of single_question()
+        #single_question_result is now contain the result in that question ( result: win or not(true or false), how many times player answer)
+        single_question_result=single_question(level[0])
+        if single_question_result=="exit":
             print("👵 Ok sweetie...")
             break
         #if player win
-        elif single_quiz_result[0]:
+        elif single_question_result[0]:
             total_correct_question=total_correct_question+1
-            total_guesses=total_guesses+single_quiz_result[1]
+            total_guesses=total_guesses+single_question_result[1]
             print(correct_speech[random.randint(0,6)])
             player_total_candy=player_total_candy+level[1]
             print(level[2])
@@ -198,17 +198,17 @@ if exit_sign:
         questions_left=questions_left-1
         question_answered=question_answered+1
 if question_answered==1:
-    print("You did not played any question...")
+    print("You did not answer any question...")
 else:
     if yes_no("Do you want to see the history?  "):
         print("     🕰️ History 🕰️")
         for i in range(1,question_answered):
-            print(f"    question {i}:   ")
-            print(f"Quiz:   ",quiz_content[i-1],"?")
+            print(f"    Question {i}:   ")
+            print(f"Question content:   ",question_content[i-1],"?")
             print(f"(You used {turn_used_that_question[i-1]} time(s) to answer)",result_history[i-1])
     #statistics
     print("     📊 Statistics 📊")
-    print(f"You played {question_answered-1} question(s)")
+    print(f"You answered {question_answered-1} question(s)")
     print(f"Total questions you gave a correct answer is {total_correct_question} question(s)  ({(total_correct_question*100)/(question_answered-1)}%)")
     print(f"You used about {int((total_guesses)/(question_answered-1))} time(s) to answer per question. ")
 
