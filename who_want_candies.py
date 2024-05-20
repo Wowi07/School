@@ -112,6 +112,9 @@ def single_question(boundary):
     symbol=random.randint(1,4)
     a=random.randint(boundary*(-1),boundary)
     b=random.randint(boundary*(-1),boundary)
+    if b==0 and symbol==4:
+        while b==0:
+            b = random.randint(boundary * (-1), boundary)
     print(f"What is the answer of {a} {change_symbol(symbol)} {b}")
     question_content.append(f"What is the answer of {a} {change_symbol(symbol)} {b}")
     correct_answer=calculate_the_answer(a,b,symbol)
