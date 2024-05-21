@@ -8,7 +8,7 @@ def instructions():
     * 🟨 Normal(|a|,|b|<=1000).
     * 🟥 Hard  (|a|,|b|<=10000000).
 - In any level, you still have a chance to get an easy question even in hard mode.
-- With the divide question, you must question the answer to the nearest integer number(eg: 1.98 will be 2, 0.12 will be 0), if there is x.5(like 1.5 or 7.5) 
+- With the divide question, you must round the answer to the nearest integer number(eg: 1.98 will be 2, 0.12 will be 0), if there is x.5(like 1.5 or 7.5) 
 you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round to 8, 10.5 round to 10).
 - Every correct answer, you will have 1 candy(Easy), 2 candies(Normal) and 3 candies(Hard).
 - You will have 3 times to answer each grandma's question.
