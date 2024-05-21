@@ -189,13 +189,13 @@ if exit_sign:
         elif single_question_result[0]:
             total_correct_question=total_correct_question+1
             total_guesses=total_guesses+single_question_result[1]
-            print(correct_speech[random.randint(0,6)])
+            print(correct_speech[random.randint(0,5)])
             player_total_candy=player_total_candy+level[1]
             print(level[2])
             print(f"Your total candies is {player_total_candy}...")
         # if player lose
         else:
-            print(incorrect_speech[random.randint(0,6)])
+            print(incorrect_speech[random.randint(0,5)])
             print(f"You don't get any candy in this question, so your total candy is still {player_total_candy}...")
             total_guesses=total_guesses+3
         questions_left=questions_left-1
