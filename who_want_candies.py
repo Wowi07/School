@@ -1,3 +1,4 @@
+import random
 # this function display the instruction whenever it called
 def instructions():
     print("""
@@ -15,6 +16,8 @@ you must round to the nearest even number(if there is 1.5, round to 2; 7.5 round
 - If you need a break, just say “I wanna sleep grandma” to end.(She won’t let you leave if you are not saying a correct sentence).
              ~~ Don't make grandma sad.😉
     """)
+
+
 def yes_no(question):
     print(question)
     error="You did not choose a valid response"
@@ -29,20 +32,22 @@ def yes_no(question):
                 print(error) 
         except ValueError:
             print(error)
+
+
 #this function return the number of round depends on user's input
 def how_many_questions():
     print("How many questions you want to answer?( input 0 to start an infinite mode ♾️  ...)")
     error = "Please input an integer greater than 0 or input 0 to start an infinite mode ♾️  ..."
     while True:
         try:
-            #i know, it's interger, but i also have to check if players wanna leave the game here, so i have to change all cap letters to lower
+            #i know, it's interger, but i also have to check if users wanna leave the program here, so i have to change all cap letters to lower
             ans = input().lower()
             # check if they wanna leave, if they want, return "exit"
             if (ans == "i wanna sleep grandma"):
                 return "exit"
-            # i assign ans into an interger, so i can check if player input an interger or not, if not, it will get value error and go straight to line 52, then go back to line 36 bc of the loop
+            # i assign ans into an interger, so i can check if user input an interger or not, if not, it will get value error and go straight to line 52, then go back to line 36 bc of the loop
             ans = int(ans)
-            #if player input the number that below 0, it will print error message and go back to line 36 bc of the loop
+            #if user input the number that below 0, it will print error message and go back to line 36 bc of the loop
             if ans < 0:
                 print(error)
                 continue
@@ -54,21 +59,25 @@ def how_many_questions():
                 return ans
         except ValueError:
             print(error)
-# "s" is a variable that stored an interger from 1-4, each number stand for an operator
+
+
+# "operator_in_number_form" is a variable that stored an interger from 1-4, each number stand for an operator
 # 1 -> +
 # 2 -> -
 # 3 -> x
 # 4 -> /
-def change_symbol(s):
-    if s==1:
+def change_symbol(operator_in_number_form):
+    if operator_in_number_form==1:
         return "+"
-    if s==2:
+    if operator_in_number_form==2:
         return "-"
-    if s==3:
+    if operator_in_number_form==3:
         return "x"
-    if s==4:
+    if operator_in_number_form==4:
         return "/"
-# this function will return boundary, candy player will get if they win, and the winning speech
+    
+
+# this function will return boundary, candy user will get if they answer correctly, and the correct speech
 def level_choosing():
     print("""Please choose the following level by input the first letter or full word.
     * 🟩 Easy  (|a|,|b|<=10).
@@ -90,6 +99,8 @@ def level_choosing():
             print("You choose a Hard question🟥")
             return 10000000,3,"You get 3 candies from this question 🟥"
         print(error)
+
+
 # this function return the answer of the question
 def calculate_the_answer(a,b,operator):
     if operator==1:
@@ -104,9 +115,9 @@ def calculate_the_answer(a,b,operator):
 question_content=[]
 result_history=[]
 turn_used_that_question=[]
-import random
-# this function will: generate the question, receive and check player answer, return the result of that question
 
+
+# this function will: generate the question, receive and check user answer, return the result of that question
 def single_question(boundary):
     #create question
     symbol=random.randint(1,4)
@@ -123,54 +134,55 @@ def single_question(boundary):
         print(f"You have {3-i+1} turn(s) left to answer...")
         while True:
             try:
-                player_answer=input().lower()
+                user_answer=input().lower()
                 #exit right here
-                if (player_answer == "i wanna sleep grandma"):
+                if (user_answer == "i wanna sleep grandma"):
                     return "exit"
-                player_answer=int(player_answer)
-                if player_answer in duplicated_answer:
+                user_answer=int(user_answer)
+                if user_answer in duplicated_answer:
                     print("You entered this answer before")
                     continue
                 break 
             except ValueError:
                 print("You did not choose a valid response")
-        if player_answer==correct_answer:
+        if user_answer==correct_answer:
             result_history.append(f"You gave a correct answer in this question which is {correct_answer}...")
             turn_used_that_question.append(i)
             return True,i
-        duplicated_answer.append(player_answer)
+        duplicated_answer.append(user_answer)
     print(f"The correct answer is {correct_answer}")
     result_history.append(f"You didn't give any correct answer in this question, the answer is {correct_answer}...")
     turn_used_that_question.append(i)
     return False,3
 
+
 #main 
 #statistics variable
 total_correct_question=0
 total_guesses=0
-player_total_candy=0
+user_total_candy=0
 print("     Who want candies? 🍬🍭")
 if yes_no("Do you want to read the instructions?  "):
     instructions()
-#i created correct and incorrect speech as a list, so whenever i get the question result, i will random a number (from 0-6) stand for the position of speech i will display
-# for eg: if player won, I got 2, then the program will display "👵: Well done darling😊"
+# i created correct and incorrect speech as a list, so whenever i get the question result, i will random a number (from 0-5) stand for the position of speech i will display
+# for eg: if user won, I got 2, then the program will display "👵: Well done darling😊"
 correct_speech=["🎉 Haaaa, grandma is proud of you 🎉","👵: Take the candy my love🍭, I have more for you😊","👵: Well done darling😊","👵: You are doing great😄","👵: Good job, take this new flavour candy🍬","👵: If you're keep doing great like this, i'll need more candies next time😄"]
-incorrect_speech=[" Grandma is kinda disappointed about you 😓","👵: Seems like you don't like this candy flavor🥲","👵: That's ok darling, you just need to practice more","👵: Ha, try more if you want those candies my love😊","👵: That's fine, relax darling","👵: Is that question too hard, my love?","👵: next time, just answer when you are ready, I won't force you darling😊"]
+incorrect_speech=[" Grandma is kinda disappointed about you 😓","👵: Seems like you don't like this candy flavor🥲","👵: That's ok darling, you just need to practice more","👵: Ha, try more if you want those candies my love😊","👵: That's fine, relax darling","👵: Is that question too hard, my love?"]
 exit_sign=True
 questions_left=how_many_questions()
-#if player wanna leave, the return of how_many_questions gonna be "exit"
-# i created exit_sign to mark that player wanna play or not
+# if user wanna leave, the return of how_many_questions gonna be "exit"
+# i created exit_sign to mark that user wanna continue or not
 if questions_left=="exit":
     print("👵 Ok sweetie...")
     exit_sign=False
 infinite_mode=""
-#if player chose inf mode, i'll change the value of infinite_mode, 
-#infinite_mode is used to display the words if player chose inf mode, if not, it will display nothing
+# if user chose inf mode, i'll change the value of infinite_mode, 
+# infinite_mode is used to display the words if user chose inf mode, if not, it will display nothing
 if questions_left==-1:
-    infinite_mode="  ♾️  Infinite mode ♾️"
+    infinite_mode="  ♾️ Infinite mode ♾️"
 question_answered=1
 if exit_sign:
-    #Game runs if player did not exit or did not out of questions
+    # program continue if user did not exit or did not out of questions
     while questions_left!=0:
         print("\n"*3)
         print(f"Question {question_answered} "+infinite_mode)
@@ -180,23 +192,23 @@ if exit_sign:
             print("👵 Ok sweetie...")
             break
         # exit this loop if they input the exit code inside of single_question()
-        #single_question_result is now contain the result in that question ( result: win or not(true or false), how many times player answer)
+        # single_question_result is now contain the result in that question ( result: correct or not(true or false), how many times user answer)
         single_question_result=single_question(level[0])
         if single_question_result=="exit":
             print("👵 Ok sweetie...")
             break
-        #if player win
+        #if user correct
         elif single_question_result[0]:
             total_correct_question=total_correct_question+1
             total_guesses=total_guesses+single_question_result[1]
             print(correct_speech[random.randint(0,5)])
-            player_total_candy=player_total_candy+level[1]
+            user_total_candy=user_total_candy+level[1]
             print(level[2])
-            print(f"Your total candies is {player_total_candy}...")
-        # if player lose
+            print(f"Your total candies is {user_total_candy}...")
+        # if user incorrect
         else:
             print(incorrect_speech[random.randint(0,5)])
-            print(f"You don't get any candy in this question, so your total candy is still {player_total_candy}...")
+            print(f"You don't get any candy in this question, so your total candy is still {user_total_candy}...")
             total_guesses=total_guesses+3
         questions_left=questions_left-1
         question_answered=question_answered+1
