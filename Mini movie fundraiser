@@ -1,0 +1,15 @@
+def make_statement(statement,lines,decoration):
+    for i in range (0,lines):
+        if i==int(lines/2):
+            print(f"{decoration*3} {statement} {decoration*3}")
+        else:
+            print(decoration*(len(statement)+8))
+
+while True:
+    print("""
+    
+    """)
+    statement=input("Statement: ")
+    lines=int(input("Lines: "))
+    decoration=input("Decoration: ")
+    make_statement(statement,lines,decoration)
