@@ -1,4 +1,4 @@
-def make_statement(statement,lines,decoration):
+def make_statement(statement,decoration,lines=1):
     lines=int(lines)
     for i in range (0,lines):
         if i==int(lines/2):
@@ -6,11 +6,3 @@ def make_statement(statement,lines,decoration):
         else:
             print(decoration*(len(statement)+8))
 
-while True:
-    print("""
-    
-    """)
-    statement=input("Statement: ")
-    lines=input("Lines: ")
-    decoration=input("Decoration: ")
-    make_statement(statement,lines,decoration)
