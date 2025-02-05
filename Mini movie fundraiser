@@ -1,3 +1,4 @@
+# this one makes a decorated statements
 def make_statement(statement,decoration,lines=1):
     lines=int(lines)
     for i in range (0,lines):
@@ -5,4 +6,21 @@ def make_statement(statement,decoration,lines=1):
             print(f"{decoration*3} {statement} {decoration*3}")
         else:
             print(decoration*(len(statement)+8))
-
+# check if the input is blank to make sure the return of this function is not blank
+def not_blank(question):
+    print(question)
+    while True:
+        response=input()
+        if response=="":
+            print("Sorry, this can't be blank...")
+            continue
+        break
+#simple yes no checker
+def yes_no(question):
+    while True:
+        response=input(question).lower()
+        if response=="yes" or response=="y":
+            return True
+        if response=="no" or response=="n":
+            return False
+        print("""Please enter either "yes"(y) or "no"(n) """)
