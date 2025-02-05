@@ -24,3 +24,12 @@ def yes_no(question):
         if response=="no" or response=="n":
             return False
         print("""Please enter either "yes"(y) or "no"(n) """)
+
+# This function check what user wants from the list showed by checking if they input the first or full letter(s) of a valid option on the list
+def string_checker(question, valid_ans_list):
+    while True:
+        response=input(question)
+        for item in valid_ans_list:
+            if response==item or response==item[0]:
+                return item
+        print(f"Please choose a valid answer from {valid_ans_list}")
