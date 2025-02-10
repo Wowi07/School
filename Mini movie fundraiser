@@ -33,3 +33,16 @@ def string_checker(question, valid_ans_list,num_letters):
             if response==item or response==item[:num_letters]: # i[:j] means taking the element from first index 0 to before index j.
                 return item
         print(f"Please choose a valid answer from {valid_ans_list} [input at least {num_letters} letter(s)]")
+
+# this function check if the input is more than 0
+def string_checker():
+    while True:
+        try:
+            response=int(input())
+            if response<=0:
+                print("Please enter an integer that is more than 0")
+                continue
+            return response
+        except ValueError:
+            print("Please enter an integer (ie: a number which does not have a decimal part).")
+
