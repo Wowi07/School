@@ -1,54 +1,64 @@
-# this one makes a decorated statements
-def make_statement(statement,decoration,lines=1):
-    lines=int(lines)
-    for i in range (0,lines):
-        if i==int(lines/2):
-            print(f"{decoration*3} {statement} {decoration*3}")
+
+def make_statement(statement, decoration, lines=1):
+    """This one makes a decorated statement, defaults to a single line
+    :parameter statement, decoration, lines(optional)
+    :return nothing!
+    """
+    lines = int(lines)
+    for i in range(0, lines):
+        if i == int(lines / 2):
+            print(f"{decoration * 3} {statement} {decoration * 3}")
         else:
-            print(decoration*(len(statement)+8))
-# check if the input is blank to make sure the return of this function is not blank
+            print(decoration * (len(statement) + 8))
+
+
 def not_blank(question):
+    """ check if the input is blank to make sure the return of this function is not blank"""
     print(question)
     while True:
-        response=input()
-        if response=="":
+        response = input()
+        if response == "":
             print("Sorry, this can't be blank...")
             continue
         break
-#simple yes no checker
+
+
+""" simple yes no checker"""
 def yes_no(question):
     while True:
-        response=input(question).lower()
-        if response=="yes" or response=="y":
+        response = input(question).lower()
+        if response == "yes" or response == "y":
             return True
-        if response=="no" or response=="n":
+        if response == "no" or response == "n":
             return False
         print("""Please enter either "yes"(y) or "no"(n) """)
 
-# This function check what user wants from the list showed by checking if they input the specific amount of letter(s) or full letter(s) of a valid option on the list
-def string_checker(question, valid_ans_list,num_letters):
+
+def string_checker(question, valid_ans_list, num_letters):
+    """ This function check what user wants from the list showed by checking if they input the specific amount of letter(s) or full letter(s) of a valid option on the list"""
     while True:
-        response=input(question)
+        response = input(question)
         for item in valid_ans_list:
-            if response==item or response==item[:num_letters]: # i[:j] means taking the element from first index 0 to before index j.
+            if response == item or response == item[:num_letters]:  # i[:j] means taking the element from first index 0 to before index j.
                 return item
         print(f"Please choose a valid answer from {valid_ans_list} [input at least {num_letters} letter(s)]")
 
-# This function checking and make sure that it returns a valid integer or float
+
 def num_check(question, num_type, exitcode):
+    """ This function checking and make sure that it returns a valid integer or float"""
     print(question)
-    if num_type=="integer" or num_type=="int":
-        num_type=int
-        value_error_announcement="please enter an integer (ie: a number which does not have a decimal part)."
-        lesser_announcement="please enter an integer that is more than 0"
+    if num_type == "integer" or num_type == "int":
+        num_type = int
+        value_error_announcement = "please enter an integer (ie: a number which does not have a decimal part)."
+        lesser_announcement = "please enter an integer that is more than 0"
     else:
-        num_type=float
-        value_error_announcement="please enter a number"
-        lesser_announcement="please enter a number that is more than 0"
+        num_type = float
+        value_error_announcement = "please enter a number"
+        lesser_announcement = "please enter a number that is more than 0"
     while True:
         try:
-            response=num_type(input())
-            if response<=0:
+            response = num_type(input())
+            if response <= 0:
                 print(lesser_announcement)
                 continue
             if exitcode:
@@ -57,17 +67,21 @@ def num_check(question, num_type, exitcode):
         except ValueError:
             print(value_error_announcement)
 
-def int_check(question,name):
+
+def int_check(question, name):
+    """ This function check if their age are available to buy a ticket and output their name with the result, ie: "A is too young""""
     print(question)
     while True:
         try:
-            response=int(input())
-            if response<12:
+            response = int(input())
+            if response < 12:
                 print(f"{name} is too young")
-            elif response>120:
+            elif response > 120:
                 print(f"{name} is too old")
             else:
                 print(f"{name} has bought a ticket")
             return
         except ValueError:
             print("<Please enter an integer between 12 and 120>")
+
+
