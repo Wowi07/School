@@ -57,4 +57,17 @@ def num_check(question, num_type, exitcode):
         except ValueError:
             print(value_error_announcement)
 
-
+def int_check(question,name):
+    print(question)
+    while True:
+        try:
+            response=int(input())
+            if response<12:
+                print(f"{name} is too young")
+            elif response>120:
+                print(f"{name} is too old")
+            else:
+                print(f"{name} has bought a ticket")
+            return
+        except ValueError:
+            print("<Please enter an integer between 12 and 120>")
