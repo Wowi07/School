@@ -34,16 +34,27 @@ def string_checker(question, valid_ans_list,num_letters):
                 return item
         print(f"Please choose a valid answer from {valid_ans_list} [input at least {num_letters} letter(s)]")
 
-# this function check if the input is more than 0
-def int_check():
+# This function checking and make sure that it returns a valid integer or float
+def num_check(question, num_type, exitcode):
+    print(question)
+    if num_type=="integer" or num_type=="int":
+        num_type=int
+        value_error_announcement="please enter an integer (ie: a number which does not have a decimal part)."
+        lesser_announcement="please enter an integer that is more than 0"
+    else:
+        num_type=float
+        value_error_announcement="please enter a number"
+        lesser_announcement="please enter a number that is more than 0"
     while True:
         try:
-            response=int(input())
+            response=num_type(input())
             if response<=0:
-                print("Please enter an integer that is more than 0")
+                print(lesser_announcement)
                 continue
-            return response
+            if exitcode:
+                return response
+            return
         except ValueError:
-            print("Please enter an integer (ie: a number which does not have a decimal part).")
+            print(value_error_announcement)
 
 
