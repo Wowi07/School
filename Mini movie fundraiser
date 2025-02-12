@@ -34,10 +34,10 @@ def yes_no(question):
         print("""Please enter either "yes"(y) or "no"(n) """)
 
 
-def string_checker(question, valid_ans_list, num_letters):
+def string_checker(question, valid_ans_list["yes", "no"], num_letters):
     """ This function check what user wants from the list showed by checking if they input the specific amount of letter(s) or full letter(s) of a valid option on the list"""
     while True:
-        response = input(question)
+        response = input(question).lower()
         for item in valid_ans_list:
             if response == item or response == item[:num_letters]:  # i[:j] means taking the element from first index 0 to before index j.
                 return item
