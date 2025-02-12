@@ -10,7 +10,23 @@ def make_statement(statement, decoration, lines=1):
             print(f"{decoration * 3} {statement} {decoration * 3}")
         else:
             print(decoration * (len(statement) + 8))
+def instruction():
+    make_statement("Instruction","ℹ️")
+    print("""
+    
+For each ticket holder enter ...
+- Their name
+- Their age
+- The payment method (cash / credit)
 
+THe program will record the ticket sale and calculate the ticket cost (and the profit).
+
+Once you have either sold all of the tickets or entered the exit code ('xxx'), the program will display the ticket
+sales information and write the data to a text file.
+
+It will also choose one lucky ticket holder who wins the draw (their ticket is free).
+
+    """)
 
 def not_blank(question):
     """ check if the input is blank to make sure the return of this function is not blank"""
@@ -20,7 +36,7 @@ def not_blank(question):
         if response == "":
             print("Sorry, this can't be blank...")
             continue
-        break
+        return response
 
 
 """ simple yes no checker"""
@@ -34,14 +50,14 @@ def yes_no(question):
         print("""Please enter either "yes"(y) or "no"(n) """)
 
 
-def string_checker(question, valid_ans_list=["yes", "no"], num_letters=1):
+def string_checker(question, valid_ans_list=("yes", "no"), num_letters=1):
     """ This function check what user wants from the list showed by checking if they input the specific amount of letter(s) or full letter(s) of a valid option on the list"""
     while True:
         response = input(question).lower()
         for item in valid_ans_list:
             if response == item or response == item[:num_letters]:  # i[:j] means taking the element from first index 0 to before index j.
                 return item
-        print(f"Please choose a valid answer from {valid_ans_list} [input at least {num_letters} letter(s)]")
+        print(f"Please choose a valid answer from {valid_ans_list}")
 
 
 def num_check(question, num_type, exitcode):
@@ -76,10 +92,47 @@ def int_check(question, name):
             response = int(input())
             if response < 12:
                 print(f"{name} is too young")
+                return False
             elif response > 120:
                 print(f"{name} is too old")
+                return False
             else:
-                print(f"{name} has bought a ticket")
-            return
+                return True
         except ValueError:
             print("<Please enter an integer between 12 and 120>")
+
+
+# main is here
+# initialise variables / non-default options for string checker
+payment_ans= ("cash", "credit")
+
+if yes_no("Do you want to see the instruction? "):
+    instruction()
+
+# initialise ticket numbers
+MAX_TICKETS = 5
+tickets_sold = 0
+
+while tickets_sold < MAX_TICKETS:
+    name = not_blank("Name: ")
+    # exit code is xxx
+    if name == "xxx":
+        break
+    if int_check("Age: ",name):
+        pay_method = string_checker("Payment method: ", payment_ans, 2)
+        tickets_sold += 1
+        print(f"{name} has bought a ticket {pay_method}")
+
+if tickets_sold == MAX_TICKETS:
+    print(f"You have sold all the tickets (ie: {MAX_TICKETS} tickets")
+else:
+    print(f"You have sold {tickets_sold} / {MAX_TICKETS} tickets")
+
+
+
+
+
+
+
+
+
