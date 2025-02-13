@@ -30,7 +30,7 @@ It will also choose one lucky ticket holder who wins the draw (their ticket is f
 
 def not_blank(question):
     """ check if the input is blank to make sure the return of this function is not blank"""
-    print(question)
+    print(question,end="")
     while True:
         response = input()
         if response == "":
@@ -62,7 +62,7 @@ def string_checker(question, valid_ans_list=("yes", "no"), num_letters=1):
 
 def num_check(question, num_type, exitcode):
     """ This function checking and make sure that it returns a valid integer or float"""
-    print(question)
+    print(question,end="")
     if num_type == "integer" or num_type == "int":
         num_type = int
         value_error_announcement = "please enter an integer (ie: a number which does not have a decimal part)."
@@ -86,20 +86,20 @@ def num_check(question, num_type, exitcode):
 
 def int_check(question, name):
     """ This function check if their age are available to buy a ticket and output their name with the result, ie: "A is too young"""
-    print(question)
+    print(question,end="")
     while True:
         try:
             response = int(input())
             if response < 12:
-                print(f"{name} is too young")
+                print(f"Sorry you are too young for this movie")
                 return False
             elif response > 120:
-                print(f"{name} is too old")
+                print(f"?? That looks like a typo (too old)")
                 return False
             else:
                 return True
         except ValueError:
-            print("<Please enter an integer between 12 and 120>")
+            print("<Please enter an integer>")
 
 
 # main is here
@@ -121,10 +121,12 @@ while tickets_sold < MAX_TICKETS:
     if int_check("Age: ",name):
         pay_method = string_checker("Payment method: ", payment_ans, 2)
         tickets_sold += 1
-        print(f"{name} has bought a ticket {pay_method}")
+        print(f"{name} has bought a ticket ({pay_method})")
+    print("""
+    """)
 
 if tickets_sold == MAX_TICKETS:
-    print(f"You have sold all the tickets (ie: {MAX_TICKETS} tickets")
+    print(f"You have sold all the tickets (ie: {MAX_TICKETS} tickets)")
 else:
     print(f"You have sold {tickets_sold} / {MAX_TICKETS} tickets")
 
