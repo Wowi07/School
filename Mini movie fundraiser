@@ -1,4 +1,4 @@
-
+# this one makes a decorated statements
 def make_statement(statement, decoration, lines=1):
     """This one makes a decorated statement, defaults to a single line
     :parameter statement, decoration, lines(optional)
@@ -39,7 +39,6 @@ def not_blank(question):
         return response
 
 
-""" simple yes no checker"""
 def yes_no(question):
     while True:
         response = input(question).lower()
@@ -84,7 +83,7 @@ def num_check(question, num_type, exitcode):
             print(value_error_announcement)
 
 
-def int_check(question, name):
+def int_check(question):
     """ This function check if their age are available to buy a ticket and output their name with the result, ie: "A is too young"""
     print(question,end="")
     while True:
