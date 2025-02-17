@@ -83,7 +83,7 @@ def num_check(question, num_type, exitcode):
             print(value_error_announcement)
 
 
-def int_check(question):
+def int_check(question,name):
     """ This function check if their age are available to buy a ticket and output their name with the result, ie: "A is too young"""
     print(question,end="")
     while True:
@@ -95,16 +95,27 @@ def int_check(question):
             elif response > 120:
                 print(f"?? That looks like a typo (too old)")
                 return False
-            else:
-                return True
+            elif response >=12 or response<16:
+                # First return element is for the if condition in main to see if the program should continue because users age is in valid boundary
+                # Second element return the index/position of their ticket type in the list in main: 0 for children, 1 for adult, 2 for senior
+                return True , 0
+            elif response >=16 or response<65:
+                return True, 1
+            elif response >=65 or response<121:
+                return True, 2
         except ValueError:
             print("<Please enter an integer>")
 
 
+        
 # main is here
 # initialise variables / non-default options for string checker
 payment_ans= ("cash", "credit")
 
+#ticket price list : Child ticket : 7.5, adult 10.50, senior 6.50
+price_list = (7.5 , 10.50 , 6.50)
+# credit card surcharge (currently 5%)
+CREDIT_SURCHARGE = 0.05
 if yes_no("Do you want to see the instruction? "):
     instruction()
 
@@ -117,10 +128,18 @@ while tickets_sold < MAX_TICKETS:
     # exit code is xxx
     if name == "xxx":
         break
-    if int_check("Age: ",name):
+    age=int_check("Age: ",name)
+    if age[0]:
+        price_cost = price_list[int(age[1])]
         pay_method = string_checker("Payment method: ", payment_ans, 2)
+        if pay_method=="credit":
+            surcharge=CREDIT_SURCHARGE
+        else:
+            surcharge=0.00
         tickets_sold += 1
-        print(f"{name} has bought a ticket ({pay_method})")
+        print(f"{name}'s ticket cost ${price_cost}, they paid by {pay_method} so the surcharge is ${surcharge}")
+        price_cost=(price_cost*float(1+surcharge))
+        print(f"The total payal is {price_cost:.2f}")
     print("""
     """)
 
