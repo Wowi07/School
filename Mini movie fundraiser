@@ -95,13 +95,13 @@ def int_check(question,name):
             elif response > 120:
                 print(f"?? That looks like a typo (too old)")
                 return False
-            elif response >=12 or response<16:
+            elif response >=12 and response<16:
                 # First return element is for the if condition in main to see if the program should continue because users age is in valid boundary
                 # Second element return the index/position of their ticket type in the list in main: 0 for children, 1 for adult, 2 for senior
                 return True , 0
-            elif response >=16 or response<65:
+            elif response >=16 and response<65:
                 return True, 1
-            elif response >=65 or response<121:
+            elif response >=65 and response<121:
                 return True, 2
         except ValueError:
             print("<Please enter an integer>")
@@ -147,12 +147,3 @@ if tickets_sold == MAX_TICKETS:
     print(f"You have sold all the tickets (ie: {MAX_TICKETS} tickets)")
 else:
     print(f"You have sold {tickets_sold} / {MAX_TICKETS} tickets")
-
-
-
-
-
-
-
-
-
