@@ -1,3 +1,5 @@
+import pandas
+import random
 # this one makes a decorated statements
 def make_statement(statement, decoration, lines=1):
     """This one makes a decorated statement, defaults to a single line
@@ -106,7 +108,9 @@ def int_check(question,name):
         except ValueError:
             print("<Please enter an integer>")
 
-
+def currency(x):
+    """Formats numbers as currency ($#.##)"""
+    return "${:.2f}".format(x)
         
 # main is here
 # initialise variables / non-default options for string checker
@@ -123,26 +127,69 @@ if yes_no("Do you want to see the instruction? "):
 MAX_TICKETS = 5
 tickets_sold = 0
 
+# variable for pandas
+all_name=[]
+all_ticket_cost=[]
+all_surcharge=[]
+
 while tickets_sold < MAX_TICKETS:
     name = not_blank("Name: ")
     # exit code is xxx
     if name == "xxx":
         break
+    all_name.append(name)
     age=int_check("Age: ",name)
     if age[0]:
         price_cost = price_list[int(age[1])]
+        all_ticket_cost.append(price_cost)
         pay_method = string_checker("Payment method: ", payment_ans, 2)
         if pay_method=="credit":
             surcharge=CREDIT_SURCHARGE
         else:
             surcharge=0.00
+        all_surcharge.append(price_cost*surcharge)
         tickets_sold += 1
-        print(f"{name}'s ticket cost ${price_cost}, they paid by {pay_method} so the surcharge is ${surcharge}")
-        price_cost=(price_cost*float(1+surcharge))
-        print(f"The total payal is {price_cost:.2f}")
+        #print(f"{name}'s ticket cost ${price_cost}, they paid by {pay_method} so the surcharge is {surcharge}")
+        #price_cost=(price_cost*float(1+surcharge))
+        #print(f"The total payal is {price_cost:.2f}")
     print("""
     """)
+# Create a dict for data frame
+mini_movie_dic={
+    'Name':all_name,
+    'Ticket price':all_ticket_cost,
+    'Surcharge':all_surcharge
+}
+# Create data frame from the dict
+mini_movie_frame = pandas.DataFrame(mini_movie_dic)
+mini_movie_frame['Total']= mini_movie_frame['Ticket price']+mini_movie_frame['Surcharge']
+mini_movie_frame['Profit']=mini_movie_frame['Ticket price']-5
 
+
+# Variables holding total paid and total profit
+Total_paid=mini_movie_frame['Total'].sum()
+Total_profit=mini_movie_frame['Profit'].sum()
+
+# Put the currency in
+add_dollar_in=['Ticket price','Surcharge','Total','Profit']
+for item in add_dollar_in:
+    mini_movie_frame[item]=mini_movie_frame[item].apply(currency)
+#print the data frame
+print(mini_movie_frame.to_string(index=False))
+print(f"Total paid: ${Total_paid:.2f}")
+print(f"Total profit: ${Total_profit:.2f}")
+
+# winner annoucement
+# random winner to free their ticket
+winner_index=all_name.index(random.choice(all_name))
+print(f"winner {all_name[winner_index]} list position {winner_index}")
+winner_paid = all_ticket_cost[winner_index]+all_surcharge[winner_index]
+print(f"The lucky winner is {all_name[winner_index]}. Their ticket worth ${winner_paid:.2f} is now free!")
+print(f"Total Paid is now ${(Total_paid - winner_paid):.2f}")
+print(f"The total profit is now ${(Total_profit - all_ticket_cost[winner_index]+5):.2f}")
+
+
+# How many tickets sold
 if tickets_sold == MAX_TICKETS:
     print(f"You have sold all the tickets (ie: {MAX_TICKETS} tickets)")
 else:
