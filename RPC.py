@@ -1,146 +1,254 @@
-def instruction():
-    print('''
-                *** INSTRUCTION ***
-- Users can either choose the number of rounds or they can opt for infinite mode.
-
-- If users press the exit code ‘xxx’ or play the requested number of rounds, then the game should end.
-
-- When the game ends, you should be able to choose to see your game history.
-
-- During the game, you are able to type either the full word (rock / paper / scissors) or the first letter of the word (R / P / S) to indicate your choice.
-
-- Remember that…
-
-    * Paper beats rock
-
-    * Rock beats scissors
-
-    * Scissors beats paper''')
-history_p=[]
-history_c=[]
-history_r=[]
-def yes_no(question):
-    print(question + "  ")
-    while True:
-        r=input().lower()
-        if r == "y" or r== "yes":
-            return True
-        elif r=="n" or r=="no":
-            return False
+import pandas
+from tabulate import tabulate
+from datetime import date
+# this one makes a decorated statements
+def make_statement(statement, decoration, lines=1):
+    """This one makes a decorated statement, defaults to a single line
+    :parameter statement, decoration, lines(optional)
+    :return nothing!
+    """
+    res=""
+    lines = int(lines)
+    for i in range(0, lines):
+        if i == int(lines / 2):
+            res=res+f"{decoration * 3} {statement} {decoration * 3}\n"
         else:
-            print("You did not choose the valid response")
-import random
-def cp():
-    return random.randint(1, 3)
-def cook(decision) :
-    if decision == "r" or decision == "rock" or decision==1:
-        return "rock" , "paper"
-    elif decision == "p" or decision == "paper" or decision == 2:
-        return  "paper" , "scissor"
-    elif decision == "s" or decision == "scissor" or decision == 3:
-        return "scissor" , "rock"
+            res+=decoration * (len(statement) + 8) +"\n"
+    return res
+
+
+def not_blank(question):
+    """ check if the input is blank to make sure the return of this function is not blank"""
+    print(question,end="")
+    while True:
+        response = input()
+        if response == "":
+            print("Sorry, this can't be blank...")
+            continue
+        return response
+
+
+def yes_no(question):
+    while True:
+        response = input(question).lower()
+        if response == "yes" or response == "y":
+            return True
+        if response == "no" or response == "n":
+            return False
+        print("""Please enter either "yes"(y) or "no"(n) """)
+
+
+def string_checker(question, valid_ans_list=("yes", "no"), num_letters=1):
+    """ This function check what user wants from the list showed by checking if they input the specific amount of letter(s) or full letter(s) of a valid option on the list"""
+    while True:
+        response = input(question).lower()
+        for item in valid_ans_list:
+            if response == item or response == item[:num_letters]:  # i[:j] means taking the element from first index 0 to before index j.
+                return item
+        print(f"Please choose a valid answer from {valid_ans_list}")
+
+
+def num_check(question, num_type, exitcode):
+    """ This function checking and make sure that it returns a valid integer or float"""
+    print(question,end="")
+    if num_type == "integer" or num_type == "int":
+        num_type = int
+        value_error_announcement = "please enter an integer (ie: a number which does not have a decimal part)."
+        lesser_announcement = "please enter an integer that is more than 0"
     else:
-        print("You did not choose the valid response")
-        return 0 , 0
-def check_int():
-    print("How many rounds would you like? Press 0 to join the infinite mode")
+        num_type = float
+        value_error_announcement = "please enter a number"
+        lesser_announcement = "please enter a number that is more than 0"
+
     while True:
         try:
-            error="Please enter an integer bigger than 0 to play a requested rounds, or choose 0 to start inf mode"
-            choose=int(input())
-            if(choose<0):
-                print(error)
-            else:
-                return choose
+            response = input()
+            if response=="":
+                return ""
+            response=num_type(response)
+            if response <= 0:
+                print(lesser_announcement)
+                continue
+            if exitcode:
+                return response
+            return
         except ValueError:
-            print(error)
-def game_play():
-    #player's turn
-    print("Please input your decision:  ")
+            print(value_error_announcement)
+
+
+# def int_check(question,name):
+#     """ This function check if their age are available to buy a ticket and output their name with the result, ie: "A is too young"""
+#     print(question,end="")
+#     while True:
+#         try:
+#             response = int(input())
+#             if response < 12:
+#                 print(f"Sorry you are too young for this movie")
+#                 return False
+#             elif response > 120:
+#                 print(f"?? That looks like a typo (too old)")
+#                 return False
+#             elif response >=12 and response<16:
+#                 # First return element is for the if condition in main to see if the program should continue because users age is in valid boundary
+#                 # Second element return the index/position of their ticket type in the list in main: 0 for children, 1 for adult, 2 for senior
+#                 return True , 0
+#             elif response >=16 and response<65:
+#                 return True, 1
+#             elif response >=65 and response<121:
+#                 return True, 2
+#         except ValueError:
+#             print("<Please enter an integer>")
+
+def currency(x):
+    """Formats numbers as currency ($#.##)"""
+    return "${:.2f}".format(x)
+
+def get_expenses(exp_type,default_item_quanity=1):
+    """:return the frame for pandas""" 
+    all_item_name=[]
+    all_item_quanity=[]
+    all_item_cost=[]
+
+    # expenses dict
+    data_dict={
+        "Item":all_item_name,
+        "Amount":all_item_quanity,
+        "$ / Item":all_item_cost
+    }
+    if exp_type=="fixed":
+        how_much_question="How much? $"
+    else:
+        how_much_question="Price for one: $"
     while True:
-        temp=input();
-        if(temp=="xxx"):
-            return "exit"
-        player=cook(temp);
-        if(player[0]==0):
-            continue;
-        break;
-    history_p.append(player[0])
-    print("You choose " +player[0])
-    #computer's turn
-    print("It's computer turn 🤖")
-    print("Please press <Enter> to continue....")
-    input()
-    computer=cook(cp())
-    history_c.append(computer[0])
-    print("Computer choose "+ computer[0])
-    #win or lose
-    if(player[1]==computer[0]):
-        return "Computer"
-    elif(player[0]==computer[0]):
-        return "Tie"
+        response=not_blank("Item name: ")
+        if response!="xxx":
+            # name of item
+            all_item_name.append(response)
+            item_quanity=num_check("How many: ", "int", True)
+            # numer of item
+            if item_quanity=="":
+                item_quanity=default_item_quanity
+            all_item_quanity.append(item_quanity)
+            # cost of item
+            item_cost=num_check(how_much_question,"float",True)
+            all_item_cost.append(item_cost)
+            continue
+        if len(all_item_name)== 0 and exp_type=="variable":
+            print(f"Oops - you have not entered anything.\nYou need at least one item.")
+            continue
+        break
+
+    # make pandas
+    expense_frame = pandas.DataFrame(data_dict)
+    # Calculate Cost column
+    expense_frame["Cost"]= expense_frame['Amount'] * expense_frame['$ / Item']
+    # calculate subtotal
+    subtotal = expense_frame['Cost'].sum()
+
+    # apply currency formatting to currency columns
+    add_dollars=["$ / Item", "Cost"]
+    for item in add_dollars:
+        expense_frame[item] = expense_frame[item].apply(currency)
+    if exp_type == "variable":
+        expense_string=tabulate(expense_frame,headers='keys',tablefmt='psql',showindex=False)
     else:
-        return "Player"
-#main 
-print("💎📰✂️ Rock Paper Scissors ✂️📰💎") 
-if yes_no("Do you want to read the instruction?"):
-    instruction()
-#round choose
-loop=check_int()
-temps=0
-win=0 
-lose=0
-if(loop==0):
-    loop=loop-1 
-while loop!=0:
-    input("Press <Enter> to start this round....")
-    print("\n"*10+f"👾👾   Round {temps+1}  👾👾 ")
-    res=game_play()
-    if(res=="exit"):
-        print("You chose exit...")
-        break;
-    temps=temps+1
-    if(res=="Computer"):
-        history_r.append("Computer won this round 🤖 🫶")
-        print("Computer win this round  🤖 🫶")
-        print("\n"*2)
-        lose=lose+1
-    elif(res=="Player"):
-        history_r.append("Player won this round 🤫 🧏️")
-        print("Player win this round 🤫 🧏️ ")
-        print("\n"*2)
-        win=win+1
+        expense_string = tabulate(expense_frame[['Item' , 'Cost']], headers='keys', tablefmt='psql', showindex=False)
+    return expense_string, subtotal
+
+def profit_goal(total_costs):
+    if yes_no("Do you want to input as Dollar($)? "):
+        input_type = "$"
     else:
-        history_r.append("You guys were tie this round 🤝")
-        print("You guys are tie 🤝")
-    loop=loop-1
-#history 
-if yes_no("Do you want to see the history?"):
-    print("\n"*10)
-    print("🕰🕰 Game history 🕰🕰️")
-    for i in range (0,temps):
-        print(f'''Round {i+1}:  
-Player chose {history_p[i]}   ; Computer chose {history_c[i]} ~~~ So {history_r[i]}''')
-#Stat 
-print("📊📊 Game Statistics 📊📊")
-if temps!=0:
-    tie=temps-win-lose
-    print(f"You played "+str(temps)+" rounds:")
-    wins=win
-    win=(float(win)*100)/float(temps)
-    print(f"You won {wins} rounds ; which is {win}%")
-    loses=lose
-    lose=(float(lose)*100)/float(temps)
-    print(f"You lose {loses} rounds ; which is {lose}%")
-    temps=(float(tie)*100)/float(temps)
-    print(f"You tie {tie} rounds ; which is {temps}%")
+        input_type = "%"
+    target_profit=num_check("Profit goal? ","float",True)
+    if input_type == "$" and target_profit <= 100:
+        if yes_no("Do you mean %?"):
+            input_type = "%"
+    if input_type == "%" and target_profit >100:
+        if yes_no("Do you mean $?"):
+            input_type = "$"
+    if input_type == "$":
+        return "$" , target_profit
+    else:
+        return "%" , total_costs/profit_goal
+
+#main is here
+fixed_subtotal = 0
+fixed_panda_string = ""
+product_name = not_blank("Product name: ")
+quanity_made = num_check("Quantity being made: ", "interger", True)
+print("Getting Variable Costs...")
+variable_expense=get_expenses("variable",quanity_made)
+
+print()
+variable_pandas=variable_expense[0]
+variable_subtotal=variable_expense[1]
+
+
+# ask if user has fixed expenses and retrive them
+print()
+
+if yes_no("Do you have fixed expenses? "):
+    fixed_expense=get_expenses("fixed")
+    fixed_panda_string= fixed_expense[0]
+    fixed_subtotal = fixed_expense[1]
+print()
+if fixed_subtotal == 0 :
+    has_fixed = False 
+    fixed_panda_string=""
 else:
-    print("You did not play any round...")
+    has_fixed=True
 
+print()
 
-    
+total_expenses = variable_subtotal + fixed_subtotal
+# Get profit Goal here.
 
-    
-    
-    
-    
+# strings / output area
+
+# **** Get current date for heading and filename ****
+today = date.today()
+
+# Get day, month and year as indiviual strings
+day = today.strftime("%d")
+month = today.strftime("%m")
+year = today.strftime("%Y")
+
+# strings for printing to file
+file_heading = make_statement("Fund Raising Calculator" +" "+f"{product_name}, {day}/{month}/{year}","=")
+file_quanity = f"Quanity being made: {quanity_made:.0f}"
+file_variable_expenses_heading = make_statement("Variable Expenses","-")
+file_variable_expenses_frame = variable_pandas
+file_variable_expenses_subtotal = f"Variable Expenses Subtotal: ${variable_subtotal:.2f}"
+if has_fixed == False:
+    file_fixed_expenses_heading = make_statement("You have no fixed expenses","-")
+    file_fixed_expenses_pandas = ""
+    file_fixed_expenses_subtotal = f"Fixed Expenses Subtotal: ${fixed_subtotal:.2f}"
+else:
+    file_fixed_expenses_heading = make_statement("Fixed Expenses","-")
+    file_fixed_expenses_pandas = fixed_panda_string
+    file_fixed_expenses_subtotal = f"Fixed Expenses Subtotal: ${fixed_subtotal:.2f}"
+file_total_Expenses = f"Total Expenses: ${total_expenses:.2f}"
+
+write_list=(
+    file_heading,"\n","\n",
+    file_quanity,"\n","\n",
+    file_variable_expenses_heading,"\n",
+    file_variable_expenses_frame,"\n",
+    file_variable_expenses_subtotal,"\n","\n",
+    file_fixed_expenses_heading,"\n",
+    file_fixed_expenses_pandas,"\n",
+    file_fixed_expenses_subtotal,"\n","\n",
+    file_total_Expenses,"\n","\n"
+)
+for item in write_list:
+    print(item,end="")
+
+# create and write into file
+file_name = f"{product_name}_{year}_{month}_{day}"
+write_to = "{}.txt".format(file_name)
+
+text_file = open(write_to,"w+")
+
+for item in write_list:
+    text_file.write(item)
